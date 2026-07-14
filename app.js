@@ -83,28 +83,32 @@
   /* LANGUAGE */
   const translations = {
     es: {
-      navWork:'Trabajo', navMethod:'Método', navCrew:'Crew', navProject:'Proyecto', soundOff:'Sonido',
-      heroEyebrow:'FPV · FILM · LIVE · GUATEMALA', heroLine1:'Entramos donde', heroLine2:'las cámaras', heroLine3:'no.',
-      heroBody:'Diseñamos trayectorias imposibles para shows, marcas y películas que no pueden verse como todo lo demás.',
-      enterUniverse:'Entrar al universo', gravityNote:'Mueve el cursor. Altera la gravedad.',
-      manifestoLead:'No observamos el momento desde afuera.', manifestoImpact:'Diseñamos la ruta para <span>entrar en él.</span>',
-      selectedWork:'Trabajo<br>seleccionado.', workIntro:'Live, FPV y producción comercial. Cada proyecto es una atmósfera distinta; la precisión es la misma.', playFilm:'Ver película',
-      liveLine1:'No miramos', liveLine2:'el show.', liveLine3:'Volamos dentro.', liveArchive:'Una noche.<br>Una oportunidad.', archiveIntro:'Momentos irrepetibles, capturados desde perspectivas que una cámara tradicional no puede alcanzar.',
-      methodTitle:'Precisión antes<br>del impacto.', methodIntro:'La toma imposible no es suerte. Es ruta, coordinación, riesgo calculado y una decisión clara en post.',
-      method1Title:'Diseñamos', method1Body:'Ruta, seguridad, timing, movimiento y objetivo emocional antes de encender motores.', method2Title:'Entramos', method2Body:'FPV, drone estabilizado y cámara terrestre operando como una sola unidad.', method3Title:'Construimos', method3Body:'Edición, color y sonido para convertir material en memoria, ritmo y resultado.',
-      crewTitle:'Dos miradas.<br>Una trayectoria.', missionTitle:'Hagamos<br>la toma.', missionBody:'Cuéntanos qué sucede, dónde sucede y qué debe sentir la audiencia. Nosotros diseñamos la trayectoria.', startProject:'Iniciar proyecto'
+      navWork:'Trabajo', navMethod:'Operación', navCrew:'Crew', navProject:'Cotizar', soundOff:'Sonido',
+      heroEyebrow:'FPV · DRONE · CAMERA UNIT · POST', heroLine1:'Entramos donde', heroLine2:'las cámaras', heroLine3:'no.',
+      heroBody:'Producción y operación audiovisual especializada para eventos, marcas y campañas.',
+      enterUniverse:'Ver trabajos', gravityNote:'Mueve el cursor. Altera la gravedad.',
+      signalTitle:'Tu visión.<br><span>Nuestra ejecución.</span>', signalBody:'Nos integramos al brief, la producción y los lineamientos de tu marca para ejecutar la cobertura acordada.',
+      manifestoLead:'No vendemos conceptos que no fueron contratados.', manifestoImpact:'Brief. Coordinación. <span>Captura. Entrega.</span>',
+      selectedWork:'Trabajo<br>seleccionado.', workIntro:'Operación FPV, cobertura live, cámara y postproducción ejecutadas bajo el alcance acordado.', playFilm:'Ver corte',
+      liveLine1:'No miramos', liveLine2:'el show.', liveLine3:'Operamos dentro.', liveArchive:'Una noche.<br>Una oportunidad.', archiveIntro:'Cortes de muestra de operaciones ejecutadas en conciertos, festivales y escenarios.',
+      hospitalityTitle:'Restaurantes.<br>Producto. Atmósfera.', hospitalityIntro:'Contenido ejecutado para comunicación digital, producto, servicio y experiencia de marca.',
+      methodTitle:'Alcance claro.<br>Ejecución precisa.', methodIntro:'Nos integramos al equipo del cliente, agencia o producción y ejecutamos únicamente el alcance acordado.',
+      method1Title:'Recibimos', method1Body:'Objetivo, locación, rundown, entregables, referencias y lineamientos.', method2Title:'Coordinamos', method2Body:'Ruta técnica, accesos, seguridad, horarios y comunicación con producción.', method3Title:'Operamos', method3Body:'FPV, drone estabilizado y cámara terrestre según el alcance contratado.', method4Title:'Entregamos', method4Body:'Selección, edición, color, formatos y material final o bruto según acuerdo.',
+      crewTitle:'Dos operadores.<br>Una ejecución.', missionTitle:'Ejecutemos<br>la toma.', missionBody:'Compártenos fecha, locación, cobertura requerida, entregables y presupuesto de referencia. Trabajamos bajo el brief y los lineamientos del cliente o su agencia.', startProject:'Solicitar cotización', scopeNote:'Producción y ejecución audiovisual. Conceptualización de campaña, diseño gráfico, dirección de arte y estrategia se cotizan por separado.'
     },
     en: {
-      navWork:'Work', navMethod:'Method', navCrew:'Crew', navProject:'Project', soundOff:'Sound',
-      heroEyebrow:'FPV · FILM · LIVE · GUATEMALA', heroLine1:'We enter where', heroLine2:'cameras', heroLine3:'cannot.',
-      heroBody:'We design impossible trajectories for shows, brands and films that cannot look like everything else.',
-      enterUniverse:'Enter the universe', gravityNote:'Move the cursor. Alter gravity.',
-      manifestoLead:'We do not watch the moment from outside.', manifestoImpact:'We design the route to <span>enter it.</span>',
-      selectedWork:'Selected<br>work.', workIntro:'Live, FPV and commercial production. Every project has a different atmosphere; the precision stays the same.', playFilm:'Play film',
-      liveLine1:'We do not watch', liveLine2:'the show.', liveLine3:'We fly inside.', liveArchive:'One night.<br>One chance.', archiveIntro:'Unrepeatable moments captured from perspectives a traditional camera cannot reach.',
-      methodTitle:'Precision before<br>impact.', methodIntro:'The impossible shot is not luck. It is route, coordination, calculated risk and a clear decision in post.',
-      method1Title:'Design', method1Body:'Route, safety, timing, movement and emotional objective before motors are armed.', method2Title:'Enter', method2Body:'FPV, stabilized drone and ground camera operating as a single unit.', method3Title:'Build', method3Body:'Editing, color and sound turn footage into memory, rhythm and outcome.',
-      crewTitle:'Two visions.<br>One trajectory.', missionTitle:'Let’s make<br>the shot.', missionBody:'Tell us what happens, where it happens and what the audience must feel. We design the trajectory.', startProject:'Start a project'
+      navWork:'Work', navMethod:'Operation', navCrew:'Crew', navProject:'Quote', soundOff:'Sound',
+      heroEyebrow:'FPV · DRONE · CAMERA UNIT · POST', heroLine1:'We enter where', heroLine2:'cameras', heroLine3:'cannot.',
+      heroBody:'Specialized audiovisual production and operation for events, brands and campaigns.',
+      enterUniverse:'View work', gravityNote:'Move the cursor. Alter gravity.',
+      signalTitle:'Your vision.<br><span>Our execution.</span>', signalBody:'We integrate into your brief, production and brand guidelines to execute the agreed coverage.',
+      manifestoLead:'We do not sell concepts that were not commissioned.', manifestoImpact:'Brief. Coordination. <span>Capture. Delivery.</span>',
+      selectedWork:'Selected<br>work.', workIntro:'FPV operation, live coverage, camera and postproduction executed within the agreed scope.', playFilm:'Play cut',
+      liveLine1:'We do not watch', liveLine2:'the show.', liveLine3:'We operate inside.', liveArchive:'One night.<br>One chance.', archiveIntro:'Sample cuts from operations executed at concerts, festivals and stages.',
+      hospitalityTitle:'Restaurants.<br>Product. Atmosphere.', hospitalityIntro:'Content executed for digital communication, product, service and brand experience.',
+      methodTitle:'Clear scope.<br>Precise execution.', methodIntro:'We integrate with the client, agency or production team and execute only the agreed scope.',
+      method1Title:'Receive', method1Body:'Objective, location, rundown, deliverables, references and guidelines.', method2Title:'Coordinate', method2Body:'Technical route, access, safety, timing and production communication.', method3Title:'Operate', method3Body:'FPV, stabilized drone and ground camera according to the contracted scope.', method4Title:'Deliver', method4Body:'Selection, editing, color, formats and final or raw material as agreed.',
+      crewTitle:'Two operators.<br>One execution.', missionTitle:'Let’s execute<br>the shot.', missionBody:'Send us the date, location, required coverage, deliverables and reference budget. We work under the client or agency brief and guidelines.', startProject:'Request a quote', scopeNote:'Audiovisual production and execution. Campaign concepts, graphic design, art direction and strategy are quoted separately.'
     }
   };
   let language = 'es';

@@ -1,29 +1,17 @@
-# REDKAM V6 — Event Horizon Cut
+# REDKAM V6.1 — Production Unit Cut
 
-Sitio estático listo para GitHub Pages.
+Versión enfocada en producción y ejecución audiovisual, no en conceptualización de campañas.
 
-## Vista local
+## Publicar en GitHub Pages
+1. Sube el contenido de esta carpeta a la raíz del repositorio `93kapo/redkam`.
+2. Confirma el commit en la rama `main`.
+3. GitHub Pages actualizará automáticamente `https://93kapo.github.io/redkam/`.
+4. Haz recarga fuerte: `Cmd + Shift + R` o `Ctrl + Shift + R`.
 
-Mac/Linux:
+## Estructura audiovisual
+- `assets/new/`: previews comprimidos y posters.
+- Los videos completos deben reemplazarse posteriormente por embeds de YouTube no listados.
+- Los previews se cargan solo cuando están cerca del viewport o cuando se abre el modal.
 
-```bash
-python3 -m http.server 8080
-```
-
-Windows:
-
-```bash
-py -m http.server 8080
-```
-
-Abre `http://localhost:8080`.
-
-## Publicación en GitHub Pages
-
-Sube el contenido de esta carpeta a la raíz del repositorio. El archivo `index.html` debe quedar en la raíz. Activa **Settings → Pages → Deploy from a branch → main / root**.
-
-## Videos completos
-
-Los previews pequeños están dentro de `assets/`. Los videos completos de Subtronics y DØMINA se cargan desde YouTube únicamente cuando el usuario abre el modal.
-
-Para sustituir un enlace de YouTube, cambia el valor `data-youtube="ID"` en `index.html`.
+## Posicionamiento
+REDKAM se presenta como unidad de producción y ejecución audiovisual especializada en FPV, drone, cámara y postproducción. Conceptualización, diseño, dirección de arte y estrategia no están incluidos salvo cotización expresa.
