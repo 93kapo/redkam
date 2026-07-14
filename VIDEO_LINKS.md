@@ -1,17 +1,18 @@
-# Links pendientes para películas completas
+# Películas completas pendientes de YouTube
 
-Subir los masters a YouTube como **No listados**, con la opción de inserción habilitada, y enviar los enlaces de:
+Cuando existan versiones completas, subirlas como **No listadas** y conservar habilitada la inserción en otros sitios.
 
-- Myke Towers — FPV
-- DJ Snake — FPV
-- Mendivil — FPV
-- Subtronics
-- Yandel
-- Ed Sheeran
-- Yandel + Kapo
-- Yandel Stage
-- Domino's — Delivery Flight
-- Domino's — Social Reel
-- RB SK8
+- Myke Towers — Live Film
+- DJ Snake — FPV Cut
+- Mendivil — FPV Cut
+- Subtronics — Live Cut
+- Yandel — Live Cut
+- Ed Sheeran — Live Cut
+- Yandel + Kapo — Live Cut
+- Campaña 01 — Fashion Film
+- Campaña 04 — Fashion Film
+- Fireworks EMF — FPV / Pyro
+- Montecarlo
+- Restaurant Film
 
-Mientras se reciben los links, la web abre cortes locales ligeros dentro de su propio reproductor.
+Los enlaces pueden sustituir los cortes locales dentro del modal sin aumentar el peso del sitio.

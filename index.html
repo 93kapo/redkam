@@ -4,14 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
   <meta name="description" content="REDKAM — Unidad de producción y ejecución audiovisual especializada en FPV, drone, cámara y postproducción desde Guatemala.">
   <meta property="og:title" content="REDKAM — Production + Execution Unit">
   <meta property="og:description" content="Entramos donde las cámaras no.">
-  <meta property="og:image" content="assets/new/myke-fpv.jpg">
+  <meta property="og:image" content="assets/v63/myke-bw.jpg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>REDKAM — Production + Execution Unit</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M9 6.7 17.5 12 9 17.3V6.7Z" fill="currentColor"/></symbol>
+    <symbol id="icon-arrow-dr" viewBox="0 0 24 24"><path d="M6 7h11v11M17 7 6.5 17.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-arrow-ur" viewBox="0 0 24 24"><path d="M7 17 17.5 6.5M8 6.5h9.5V16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11m0-11-11 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="icon-sound" viewBox="0 0 24 24"><path d="M5 14v-4m4 7V7m4 12V5m4 11V8m4 6v-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </svg>
+
   <div class="preloader" id="preloader" aria-live="polite">
     <div class="preloader__brand"><span>RED</span>KAM</div>
     <div class="preloader__status"><span id="loadLabel">ACQUIRING SIGNAL</span><b id="loadCount">00</b></div>
@@ -25,53 +36,50 @@
     <a class="logo" href="#top" aria-label="REDKAM home"><span>RED</span>KAM</a>
     <nav class="desktop-nav" aria-label="Navegación principal">
       <a href="#work" data-i18n="navWork">Trabajo</a>
+      <a href="#commercial" data-i18n="navCommercial">Comercial</a>
       <a href="#method" data-i18n="navMethod">Operación</a>
-      <a href="#crew" data-i18n="navCrew">Crew</a>
       <a href="#mission" data-i18n="navProject">Cotizar</a>
     </nav>
     <div class="header-actions">
-      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false"><i></i><span data-i18n="soundOff">Sonido</span></button>
+      <button class="sound-toggle icon-button" id="soundToggle" type="button" aria-pressed="false" aria-label="Activar sonido">
+        <svg class="icon"><use href="#icon-sound" xlink:href="#icon-sound"/></svg><span data-i18n="soundOff">Sonido</span>
+      </button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma">EN</button>
-      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú"><span></span><span></span></button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu__index">REDKAM / PRODUCTION UNIT</div>
     <nav>
-      <a href="#work"><small>01</small><span data-i18n="navWork">Trabajo</span></a>
-      <a href="#method"><small>02</small><span data-i18n="navMethod">Operación</span></a>
-      <a href="#crew"><small>03</small><span data-i18n="navCrew">Crew</span></a>
-      <a href="#mission"><small>04</small><span data-i18n="navProject">Cotizar</span></a>
+      <a href="#work"><small>01</small><span data-i18n="navWork">Trabajo</span><svg class="icon"><use href="#icon-arrow-dr" xlink:href="#icon-arrow-dr"/></svg></a>
+      <a href="#commercial"><small>02</small><span data-i18n="navCommercial">Comercial</span><svg class="icon"><use href="#icon-arrow-dr" xlink:href="#icon-arrow-dr"/></svg></a>
+      <a href="#method"><small>03</small><span data-i18n="navMethod">Operación</span><svg class="icon"><use href="#icon-arrow-dr" xlink:href="#icon-arrow-dr"/></svg></a>
+      <a href="#mission"><small>04</small><span data-i18n="navProject">Cotizar</span><svg class="icon"><use href="#icon-arrow-dr" xlink:href="#icon-arrow-dr"/></svg></a>
     </nav>
   </div>
 
   <main>
     <section class="hero" id="top">
-      <canvas id="blackholeCanvas" class="blackhole-canvas" aria-hidden="true"></canvas>
-      <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+      <canvas id="constellationCanvas" class="constellation-canvas" aria-hidden="true"></canvas>
       <div class="hero__atmosphere" aria-hidden="true"></div>
       <div class="hero__coordinates">14°38'N / 90°30'W<br>GUATEMALA</div>
       <div class="hero__signal"><i></i><span>SIGNAL 06 / LOCKED</span></div>
 
       <div class="hero__copy">
         <p class="eyebrow" data-i18n="heroEyebrow">FPV · DRONE · CAMERA UNIT · POST</p>
-        <h1>
-          <span data-i18n="heroLine1">Entramos donde</span>
-          <em data-i18n="heroLine2">las cámaras</em>
-          <span data-i18n="heroLine3">no.</span>
-        </h1>
+        <h1><span data-i18n="heroLine1">Entramos donde</span><em data-i18n="heroLine2">las cámaras</em><span data-i18n="heroLine3">no.</span></h1>
         <div class="hero__bottom">
           <p data-i18n="heroBody">Producción y operación audiovisual especializada para eventos, marcas y campañas.</p>
-          <a class="text-link magnetic" href="#work"><span data-i18n="enterUniverse">Ver trabajos</span><b>↘</b></a>
+          <a class="text-link magnetic" href="#work"><span data-i18n="enterUniverse">Ver trabajos</span><svg class="icon"><use href="#icon-arrow-dr" xlink:href="#icon-arrow-dr"/></svg></a>
         </div>
       </div>
-      <div class="gravity-note"><span data-i18n="gravityNote">Mueve el cursor. Altera la gravedad.</span></div>
+      <div class="gravity-note"><span data-i18n="gravityNote">Mueve el cursor. Conecta la señal.</span></div>
       <div class="scroll-cue"><i></i><span>SCROLL TO CROSS</span></div>
     </section>
 
-    <section class="signal-burst reveal-section" aria-label="REDKAM production reel">
-      <video muted loop playsinline autoplay preload="metadata" poster="assets/new/signal-burst.jpg">
+    <section class="signal-burst reveal-section" aria-label="REDKAM production reel" style="--poster:url('assets/new/signal-burst.jpg')">
+      <video muted loop playsinline webkit-playsinline autoplay preload="metadata" poster="assets/new/signal-burst.jpg" disablepictureinpicture>
         <source src="assets/new/signal-burst.mp4" type="video/mp4">
       </video>
       <div class="signal-burst__shade"></div>
@@ -92,110 +100,79 @@
 
     <section class="work" id="work">
       <header class="section-heading reveal-section">
-        <div>
-          <div class="section-index">01 / SELECTED WORK</div>
-          <h2 data-i18n="selectedWork">Trabajo<br>seleccionado.</h2>
-        </div>
+        <div><div class="section-index">01 / SELECTED WORK</div><h2 data-i18n="selectedWork">Trabajo<br>seleccionado.</h2></div>
         <p data-i18n="workIntro">Operación FPV, cobertura live, cámara y postproducción ejecutadas bajo el alcance acordado.</p>
       </header>
 
-      <article class="feature-project project-card reveal-section" data-local="assets/new/myke-fpv.mp4" data-title="MYKE TOWERS — FPV CUT" tabindex="0" role="button" aria-label="Abrir video FPV Myke Towers">
-        <video muted loop playsinline preload="metadata" poster="assets/new/myke-fpv.jpg"><source src="assets/new/myke-fpv.mp4" type="video/mp4"></video>
+      <article class="feature-project project-card reveal-section" style="--poster:url('assets/v63/myke-bw.jpg')" data-local="assets/v63/myke-bw-preview.mp4" data-title="MYKE TOWERS — LIVE FILM" tabindex="0" role="button" aria-label="Abrir video Myke Towers">
+        <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/v63/myke-bw.jpg" disablepictureinpicture><source src="assets/v63/myke-bw-preview.mp4" type="video/mp4"></video>
         <div class="project-shade"></div>
         <div class="feature-project__meta">
-          <div><small>LIVE / ARTIST / FPV</small><h3>MYKE<br>TOWERS</h3></div>
-          <div class="project-action"><span data-i18n="playFilm">Ver corte</span><b>▶</b></div>
+          <div><small>LIVE / ARTIST / CAMERA</small><h3>MYKE<br>TOWERS</h3></div>
+          <div class="project-action premium-action"><span data-i18n="playFilm">Ver corte</span><span class="premium-action__icon"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg></span></div>
         </div>
-        <div class="feature-project__counter">01 — 04</div>
+        <div class="feature-project__counter">01 — 03</div>
       </article>
 
-      <div class="project-grid">
-        <article class="project-card project-card--wide reveal-section" data-local="assets/new/snake-fpv.mp4" data-title="DJ SNAKE — FPV CUT" tabindex="0" role="button" aria-label="Abrir video FPV DJ Snake">
-          <video muted loop playsinline preload="metadata" poster="assets/new/snake-fpv.jpg"><source src="assets/new/snake-fpv.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div>
-          <div class="project-card__meta"><small>LIVE / FESTIVAL / FPV</small><h3>DJ SNAKE</h3><span>02</span></div>
-          <div class="project-cursor">PLAY</div>
+      <div class="project-grid project-grid--three">
+        <article class="project-card project-card--wide reveal-section" style="--poster:url('assets/new/snake-fpv.jpg')" data-local="assets/new/snake-fpv.mp4" data-title="DJ SNAKE — FPV CUT" tabindex="0" role="button" aria-label="Abrir video FPV DJ Snake">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/new/snake-fpv.jpg" disablepictureinpicture><source src="assets/new/snake-fpv.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>LIVE / FESTIVAL / FPV</small><h3>DJ SNAKE</h3><span>02</span></div>
+          <div class="mobile-media-cta" aria-hidden="true"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
         </article>
 
-        <article class="project-card project-card--portrait reveal-section" data-local="assets/montecarlo.mp4" data-title="MONTECARLO" tabindex="0" role="button" aria-label="Abrir video Montecarlo">
-          <video muted loop playsinline preload="metadata" poster="assets/montecarlo.jpg"><source src="assets/montecarlo.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div>
-          <div class="project-card__meta"><small>BRAND / NIGHTLIFE</small><h3>MONTECARLO</h3><span>03</span></div>
-          <div class="project-cursor">PLAY</div>
-        </article>
-
-        <article class="project-card project-card--portrait reveal-section" data-local="assets/new/rb-sk8.mp4" data-title="RB SK8" tabindex="0" role="button" aria-label="Abrir video RB SK8">
-          <video muted loop playsinline preload="metadata" poster="assets/new/rb-sk8.jpg"><source src="assets/new/rb-sk8.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div>
-          <div class="project-card__meta"><small>SPORT / CULTURE / CAMERA</small><h3>RB SK8</h3><span>04</span></div>
-          <div class="project-cursor">PLAY</div>
+        <article class="project-card project-card--portrait reveal-section" style="--poster:url('assets/v63/fireworks-emf.jpg')" data-local="assets/v63/fireworks-emf.mp4" data-title="EMF — FIREWORKS FPV" tabindex="0" role="button" aria-label="Abrir video de fuegos artificiales EMF">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/v63/fireworks-emf.jpg" disablepictureinpicture><source src="assets/v63/fireworks-emf.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>EMF / PYRO / FPV</small><h3>FIREWORKS</h3><span>03</span></div>
+          <div class="mobile-media-cta" aria-hidden="true"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
         </article>
       </div>
     </section>
 
-    <section class="live-portal reveal-section" aria-label="Live FPV operation">
-      <div class="live-portal__media">
-        <video muted loop playsinline autoplay preload="metadata" poster="assets/new/mendivil-fpv.jpg"><source src="assets/new/mendivil-fpv.mp4" type="video/mp4"></video>
-        <div class="live-portal__scan" aria-hidden="true"></div>
+    <section class="commercial" id="commercial">
+      <header class="section-heading reveal-section">
+        <div><div class="section-index">02 / FASHION + COMMERCIAL</div><h2 data-i18n="commercialTitle">Personas.<br>Producto. Lugar.</h2></div>
+        <p data-i18n="commercialIntro">Cámara, edición y piezas digitales ejecutadas para campañas, lifestyle, hospitality y comunicación de marca.</p>
+      </header>
+      <div class="commercial-grid">
+        <article class="project-card commercial-card commercial-card--landscape reveal-section" style="--poster:url('assets/v63/campaign-01.jpg')" data-local="assets/v63/campaign-01.mp4" data-title="CAMPAIGN 01 — FASHION FILM" tabindex="0" role="button" aria-label="Abrir video Campaña 01">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/v63/campaign-01.jpg" disablepictureinpicture><source src="assets/v63/campaign-01.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>FASHION / LIFESTYLE / CAMERA</small><h3>CAMPAIGN<br>01</h3><span>01</span></div><div class="mobile-media-cta"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
+        </article>
+        <article class="project-card commercial-card commercial-card--portrait reveal-section" style="--poster:url('assets/v63/campaign-04.jpg')" data-local="assets/v63/campaign-04.mp4" data-title="CAMPAIGN 04 — FASHION FILM" tabindex="0" role="button" aria-label="Abrir video Campaña 04">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/v63/campaign-04.jpg" disablepictureinpicture><source src="assets/v63/campaign-04.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>FASHION / MODELS / SOCIAL</small><h3>CAMPAIGN<br>04</h3><span>02</span></div><div class="mobile-media-cta"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
+        </article>
+        <article class="project-card commercial-card commercial-card--portrait reveal-section" style="--poster:url('assets/montecarlo.jpg')" data-local="assets/montecarlo.mp4" data-title="MONTECARLO" tabindex="0" role="button" aria-label="Abrir video Montecarlo">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/montecarlo.jpg" disablepictureinpicture><source src="assets/montecarlo.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>BRAND / NIGHTLIFE / CAMERA</small><h3>MONTECARLO</h3><span>03</span></div><div class="mobile-media-cta"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
+        </article>
+        <article class="project-card commercial-card commercial-card--landscape reveal-section" style="--poster:url('assets/restaurant.jpg')" data-local="assets/restaurant.mp4" data-title="RESTAURANT FILM" tabindex="0" role="button" aria-label="Abrir video de restaurante">
+          <video muted loop playsinline webkit-playsinline preload="metadata" poster="assets/restaurant.jpg" disablepictureinpicture><source src="assets/restaurant.mp4" type="video/mp4"></video>
+          <div class="project-shade"></div><div class="project-card__meta"><small>HOSPITALITY / FOOD / CAMERA</small><h3>RESTAURANT<br>FILM</h3><span>04</span></div><div class="mobile-media-cta"><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg><span>PLAY</span></div><div class="project-cursor">VIEW</div>
+        </article>
       </div>
-      <div class="live-portal__copy">
-        <div class="section-index">LIVE / FPV / ONE CHANCE</div>
-        <h2><span data-i18n="liveLine1">No miramos</span><br><span data-i18n="liveLine2">el show.</span><br><em data-i18n="liveLine3">Operamos dentro.</em></h2>
-        <button class="circle-button magnetic" type="button" data-local="assets/new/mendivil-fpv.mp4" data-title="MENDIVIL — FPV CUT"><span>MENDIVIL</span><b>▶</b></button>
-      </div>
-      <div class="live-portal__telemetry">ALT 18.4M<br>VEL 61 KM/H<br>REC ●</div>
+    </section>
+
+    <section class="live-portal reveal-section" aria-label="Live FPV operation" style="--poster:url('assets/new/mendivil-fpv.jpg')">
+      <div class="live-portal__media"><video muted loop playsinline webkit-playsinline autoplay preload="metadata" poster="assets/new/mendivil-fpv.jpg" disablepictureinpicture><source src="assets/new/mendivil-fpv.mp4" type="video/mp4"></video><div class="live-portal__scan" aria-hidden="true"></div></div>
+      <div class="live-portal__copy"><div class="section-index">LIVE / FPV / ONE CHANCE</div><h2><span data-i18n="liveLine1">No miramos</span><br><span data-i18n="liveLine2">el show.</span><br><em data-i18n="liveLine3">Operamos dentro.</em></h2></div>
+      <button class="circle-button magnetic" type="button" data-local="assets/new/mendivil-fpv.mp4" data-title="MENDIVIL — FPV CUT" aria-label="Reproducir Mendivil FPV"><span>MENDIVIL</span><svg class="icon"><use href="#icon-play" xlink:href="#icon-play"/></svg></button>
+      <div class="live-portal__telemetry">ALT 18.4M<br>VEL 61 KM/H<br>REC <i></i></div>
     </section>
 
     <section class="films">
-      <header class="section-heading reveal-section">
-        <div><div class="section-index">02 / LIVE ARCHIVE</div><h2 data-i18n="liveArchive">Una noche.<br>Una oportunidad.</h2></div>
-        <p data-i18n="archiveIntro">Cortes de muestra de operaciones ejecutadas en conciertos, festivales y escenarios.</p>
-      </header>
+      <header class="section-heading reveal-section"><div><div class="section-index">03 / LIVE ARCHIVE</div><h2 data-i18n="liveArchive">Una noche.<br>Una oportunidad.</h2></div><p data-i18n="archiveIntro">Cortes de muestra de operaciones ejecutadas en conciertos, festivales y escenarios.</p></header>
       <div class="film-list">
-        <button class="film-row reveal-section" type="button" data-local="assets/new/subtronics.mp4" data-title="SUBTRONICS — LIVE CUT">
-          <span class="film-row__num">01</span><span class="film-row__title">SUBTRONICS</span><span class="film-row__type">LIVE / STAGE / SOCIAL</span><span class="film-row__arrow">↗</span><img src="assets/new/subtronics.jpg" alt="" aria-hidden="true">
-        </button>
-        <button class="film-row reveal-section" type="button" data-local="assets/new/yandel.mp4" data-title="YANDEL — LIVE CUT">
-          <span class="film-row__num">02</span><span class="film-row__title">YANDEL</span><span class="film-row__type">LIVE / ARTIST / CAMERA</span><span class="film-row__arrow">↗</span><img src="assets/new/yandel.jpg" alt="" aria-hidden="true">
-        </button>
-        <button class="film-row reveal-section" type="button" data-local="assets/new/ed-sheeran.mp4" data-title="ED SHEERAN — LIVE CUT">
-          <span class="film-row__num">03</span><span class="film-row__title">ED SHEERAN</span><span class="film-row__type">LIVE / VENUE / COVERAGE</span><span class="film-row__arrow">↗</span><img src="assets/new/ed-sheeran.jpg" alt="" aria-hidden="true">
-        </button>
-        <button class="film-row reveal-section" type="button" data-local="assets/new/yandel-kapo.mp4" data-title="YANDEL + KAPO — LIVE CUT">
-          <span class="film-row__num">04</span><span class="film-row__title">YANDEL + KAPO</span><span class="film-row__type">LIVE / ARTIST / SOCIAL</span><span class="film-row__arrow">↗</span><img src="assets/new/yandel-kapo.jpg" alt="" aria-hidden="true">
-        </button>
-        <button class="film-row reveal-section" type="button" data-local="assets/new/yandel-stage.mp4" data-title="YANDEL — STAGE CUT">
-          <span class="film-row__num">05</span><span class="film-row__title">YANDEL STAGE</span><span class="film-row__type">STAGE / LIGHT / CAMERA</span><span class="film-row__arrow">↗</span><img src="assets/new/yandel-stage.jpg" alt="" aria-hidden="true">
-        </button>
-      </div>
-    </section>
-
-    <section class="hospitality" id="hospitality">
-      <header class="section-heading reveal-section">
-        <div><div class="section-index">03 / FOOD + HOSPITALITY</div><h2 data-i18n="hospitalityTitle">Restaurantes.<br>Producto. Atmósfera.</h2></div>
-        <p data-i18n="hospitalityIntro">Contenido ejecutado para comunicación digital, producto, servicio y experiencia de marca.</p>
-      </header>
-      <div class="hospitality-grid">
-        <article class="project-card reveal-section" data-local="assets/new/dominos-flight.mp4" data-title="DOMINO'S — DELIVERY FLIGHT" tabindex="0" role="button">
-          <video muted loop playsinline preload="metadata" poster="assets/new/dominos-flight.jpg"><source src="assets/new/dominos-flight.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div><div class="project-card__meta"><small>FOOD / VFX / SOCIAL</small><h3>DOMINO'S<br>FLIGHT</h3><span>01</span></div><div class="project-cursor">PLAY</div>
-        </article>
-        <article class="project-card reveal-section" data-local="assets/new/dominos-reel.mp4" data-title="DOMINO'S — SOCIAL REEL" tabindex="0" role="button">
-          <video muted loop playsinline preload="metadata" poster="assets/new/dominos-reel.jpg"><source src="assets/new/dominos-reel.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div><div class="project-card__meta"><small>FOOD / SOCIAL / CAMERA</small><h3>DOMINO'S<br>REEL</h3><span>02</span></div><div class="project-cursor">PLAY</div>
-        </article>
-        <article class="project-card reveal-section" data-local="assets/restaurant.mp4" data-title="RESTAURANT FILM" tabindex="0" role="button">
-          <video muted loop playsinline preload="metadata" poster="assets/restaurant.jpg"><source src="assets/restaurant.mp4" type="video/mp4"></video>
-          <div class="project-shade"></div><div class="project-card__meta"><small>FOOD / ATMOSPHERE / CAMERA</small><h3>RESTAURANT<br>FILM</h3><span>03</span></div><div class="project-cursor">PLAY</div>
-        </article>
+        <button class="film-row reveal-section" type="button" data-local="assets/new/subtronics.mp4" data-title="SUBTRONICS — LIVE CUT"><span class="film-row__num">01</span><span class="film-row__title">SUBTRONICS</span><span class="film-row__type">LIVE / STAGE / SOCIAL</span><span class="film-row__arrow"><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></span><img src="assets/new/subtronics.jpg" alt="" aria-hidden="true"></button>
+        <button class="film-row reveal-section" type="button" data-local="assets/new/yandel.mp4" data-title="YANDEL — LIVE CUT"><span class="film-row__num">02</span><span class="film-row__title">YANDEL</span><span class="film-row__type">LIVE / ARTIST / CAMERA</span><span class="film-row__arrow"><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></span><img src="assets/new/yandel.jpg" alt="" aria-hidden="true"></button>
+        <button class="film-row reveal-section" type="button" data-local="assets/new/ed-sheeran.mp4" data-title="ED SHEERAN — LIVE CUT"><span class="film-row__num">03</span><span class="film-row__title">ED SHEERAN</span><span class="film-row__type">LIVE / VENUE / COVERAGE</span><span class="film-row__arrow"><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></span><img src="assets/new/ed-sheeran.jpg" alt="" aria-hidden="true"></button>
+        <button class="film-row reveal-section" type="button" data-local="assets/new/yandel-kapo.mp4" data-title="YANDEL + KAPO — LIVE CUT"><span class="film-row__num">04</span><span class="film-row__title">YANDEL + KAPO</span><span class="film-row__type">LIVE / ARTIST / SOCIAL</span><span class="film-row__arrow"><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></span><img src="assets/new/yandel-kapo.jpg" alt="" aria-hidden="true"></button>
       </div>
     </section>
 
     <section class="method" id="method">
-      <header class="section-heading reveal-section">
-        <div><div class="section-index">04 / OPERATION</div><h2 data-i18n="methodTitle">Alcance claro.<br>Ejecución precisa.</h2></div>
-        <p data-i18n="methodIntro">Nos integramos al equipo del cliente, agencia o producción y ejecutamos únicamente el alcance acordado.</p>
-      </header>
+      <header class="section-heading reveal-section"><div><div class="section-index">04 / OPERATION</div><h2 data-i18n="methodTitle">Alcance claro.<br>Ejecución precisa.</h2></div><p data-i18n="methodIntro">Nos integramos al equipo del cliente, agencia o producción y ejecutamos únicamente el alcance acordado.</p></header>
       <div class="method-grid method-grid--four">
         <article class="method-step reveal-section"><div class="method-step__top"><span>01</span><i></i><small>BRIEF</small></div><h3 data-i18n="method1Title">Recibimos</h3><p data-i18n="method1Body">Objetivo, locación, rundown, entregables, referencias y lineamientos.</p><div class="method-step__orb"></div></article>
         <article class="method-step reveal-section"><div class="method-step__top"><span>02</span><i></i><small>COORDINATION</small></div><h3 data-i18n="method2Title">Coordinamos</h3><p data-i18n="method2Body">Ruta técnica, accesos, seguridad, horarios y comunicación con producción.</p><div class="method-step__orb"></div></article>
@@ -205,45 +182,25 @@
     </section>
 
     <section class="crew" id="crew">
-      <header class="section-heading reveal-section">
-        <div><div class="section-index">05 / THE UNIT</div><h2 data-i18n="crewTitle">Dos operadores.<br>Una ejecución.</h2></div>
-      </header>
+      <header class="section-heading reveal-section"><div><div class="section-index">05 / THE UNIT</div><h2 data-i18n="crewTitle">Dos operadores.<br>Una ejecución.</h2></div></header>
       <div class="crew-list">
-        <a class="crew-row reveal-section" href="https://instagram.com/93kapo" target="_blank" rel="noopener noreferrer">
-          <span class="crew-row__role">FPV / DRONE / CAMERA</span><strong>93KAPO</strong><span class="crew-row__handle">@93KAPO</span><b>↗</b><i></i>
-        </a>
-        <a class="crew-row reveal-section" href="https://instagram.com/_redbackpack" target="_blank" rel="noopener noreferrer">
-          <span class="crew-row__role">CAMERA / EDIT / COLOR</span><strong>REDBACKPACK</strong><span class="crew-row__handle">@_REDBACKPACK</span><b>↗</b><i></i>
-        </a>
+        <a class="crew-row reveal-section" href="https://instagram.com/93kapo" target="_blank" rel="noopener noreferrer"><span class="crew-row__role">FPV / DRONE / CAMERA</span><strong>93KAPO</strong><span class="crew-row__handle">@93KAPO</span><b><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></b><i></i></a>
+        <a class="crew-row reveal-section" href="https://instagram.com/_redbackpack" target="_blank" rel="noopener noreferrer"><span class="crew-row__role">CAMERA / EDIT / COLOR</span><strong>REDBACKPACK</strong><span class="crew-row__handle">@_REDBACKPACK</span><b><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></b><i></i></a>
       </div>
     </section>
 
     <section class="mission" id="mission">
       <canvas id="missionParticles" aria-hidden="true"></canvas>
-      <div class="mission__content reveal-section">
-        <div class="section-index">06 / REQUEST A QUOTE</div>
-        <h2 data-i18n="missionTitle">Ejecutemos<br>la toma.</h2>
-        <p data-i18n="missionBody">Compártenos fecha, locación, cobertura requerida, entregables y presupuesto de referencia. Trabajamos bajo el brief y los lineamientos del cliente o su agencia.</p>
-        <a class="mission-button magnetic" href="mailto:alexanderpineda0717@gmail.com?subject=REDKAM%20-%20Solicitud%20de%20cotizaci%C3%B3n"><span data-i18n="startProject">Solicitar cotización</span><b>↗</b></a>
-        <small class="scope-note" data-i18n="scopeNote">Producción y ejecución audiovisual. Conceptualización de campaña, diseño gráfico, dirección de arte y estrategia se cotizan por separado.</small>
-      </div>
+      <div class="mission__content reveal-section"><div class="section-index">06 / REQUEST A QUOTE</div><h2 data-i18n="missionTitle">Ejecutemos<br>la toma.</h2><p data-i18n="missionBody">Compártenos fecha, locación, cobertura requerida, entregables y presupuesto de referencia. Trabajamos bajo el brief y los lineamientos del cliente o su agencia.</p><a class="mission-button magnetic" href="mailto:alexanderpineda0717@gmail.com?subject=REDKAM%20-%20Solicitud%20de%20cotizaci%C3%B3n"><span data-i18n="startProject">Solicitar cotización</span><svg class="icon"><use href="#icon-arrow-ur" xlink:href="#icon-arrow-ur"/></svg></a><small class="scope-note" data-i18n="scopeNote">Producción y ejecución audiovisual. Conceptualización de campaña, diseño gráfico, dirección de arte y estrategia se cotizan por separado.</small></div>
       <div class="mission__stamp">AVAILABLE FOR<br>GUATEMALA + LATAM</div>
     </section>
   </main>
 
-  <footer>
-    <a class="logo" href="#top"><span>RED</span>KAM</a>
-    <span>PRODUCTION + EXECUTION UNIT / 2026</span>
-    <span>GUATEMALA / LATAM</span>
-  </footer>
+  <footer><a class="logo" href="#top"><span>RED</span>KAM</a><span>PRODUCTION + EXECUTION UNIT / 2026</span><span>GUATEMALA / LATAM</span></footer>
 
   <div class="media-modal" id="mediaModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Video player">
-    <div class="media-modal__chrome">
-      <span id="modalTitle">REDKAM CUT</span>
-      <button id="closeModal" type="button">CLOSE ✕</button>
-    </div>
-    <div class="media-modal__stage" id="modalStage"></div>
-    <div class="media-modal__progress"><i></i></div>
+    <div class="media-modal__chrome"><span id="modalTitle">REDKAM CUT</span><button id="closeModal" class="modal-close" type="button" aria-label="Cerrar video"><span>CLOSE</span><svg class="icon"><use href="#icon-close" xlink:href="#icon-close"/></svg></button></div>
+    <div class="media-modal__stage" id="modalStage"></div><div class="media-modal__progress"><i></i></div>
   </div>
 
   <script src="app.js"></script>
