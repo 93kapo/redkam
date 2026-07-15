@@ -1,6 +1,6 @@
 # REDKAM — Portafolio audiovisual
 
-Portafolio audiovisual independiente de REDKAM para aftermovies, documental, fotografía, FPV y drone. Incluye navegación en español/inglés, previews en imagen, reproducción desde YouTube, diseño adaptable y contacto directo por WhatsApp.
+Portafolio audiovisual independiente de REDKAM para aftermovies, documental, fotografía, FPV y drone. Incluye navegación en español/inglés, miniclips silenciosos desde YouTube, diseño adaptable y contacto directo por WhatsApp.
 
 Esta versión no contiene autenticación, lectura del correo de visitantes, conectores ni base de datos.
 
@@ -46,7 +46,7 @@ Reemplaza `TU-USUARIO` y `TU-REPOSITORIO` por los datos de tu cuenta. También p
 - `app/page.tsx`: contenido, proyectos e interacciones.
 - `app/globals.css`: dirección visual, animaciones y diseño adaptable.
 - `app/youtube-links.ts`: único archivo donde se pegan los enlaces de YouTube.
-- `public/assets/`: imágenes ligeras usadas como preview.
+- `public/assets/`: recursos visuales ligeros del diseño general.
 - `public/og.png`: imagen que aparece al compartir el enlace.
 - `next.config.ts`: configuración para generar una versión estática.
 
@@ -54,7 +54,7 @@ No hay archivos `.mp4` ni `.webm` dentro del proyecto. Todo el material audiovis
 
 ## Agregar los enlaces de YouTube
 
-Abre `app/youtube-links.ts` y pega cada enlace entre las comillas correspondientes. La página acepta enlaces normales de YouTube, `youtu.be`, Shorts y transmisiones. Si un enlace todavía está vacío, la página muestra la imagen de preview sin intentar cargar un archivo pesado.
+Abre `app/youtube-links.ts` y pega cada enlace entre las comillas correspondientes. La página acepta enlaces normales de YouTube, `youtu.be`, Shorts y transmisiones. Cada trabajo mostrará automáticamente un miniclip silencioso de aproximadamente seis segundos, repetido en bucle. Al hacer clic, se abrirá el video completo directamente en YouTube. Si un enlace todavía está vacío, aparece un bloque neutral indicando que el enlace está pendiente; no se usa una imagen como preview.
 
 Consulta `SUBIR-A-GITHUB.md` para ver el proceso recomendado.
 

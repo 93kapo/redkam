@@ -20,3 +20,15 @@ No subas el archivo ZIP al repositorio. El ZIP solamente sirve para descargar y 
 En el repositorio selecciona **Add file → Upload files** y arrastra todo el contenido de `redkam-youtube-ready`. Esta versión no contiene videos locales; el proyecto completo pesa aproximadamente 3 MB y su archivo más grande es la imagen social `og.png`.
 
 Cuando tengas tus enlaces de YouTube, pégalos en `app/youtube-links.ts` antes de subir el proyecto, o edita ese mismo archivo directamente desde GitHub.
+
+## Activar la página
+
+Después de subir esta versión:
+
+1. Entra en **Settings** del repositorio.
+2. En el menú lateral entra en **Pages**.
+3. En **Build and deployment → Source**, selecciona **GitHub Actions**.
+4. Entra en la pestaña **Actions** y abre **Publicar REDKAM en GitHub Pages**.
+5. Si todavía no comenzó automáticamente, pulsa **Run workflow** y selecciona `main`.
+
+Cuando el proceso muestre una marca verde, GitHub mostrará allí mismo la dirección pública del sitio. Los cambios futuros en `main` se publicarán automáticamente.

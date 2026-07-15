@@ -8,13 +8,14 @@ type Locale = "es" | "en";
 type Project = {
   title: string;
   type: string;
-  image: string;
   youtubeUrl: string;
   shape?: "wide" | "portrait" | "square";
 };
 
 const WHATSAPP_URL =
   "https://wa.me/50234056149?text=Hola%20REDKAM%2C%20quiero%20cotizar%20un%20proyecto%20audiovisual.";
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const asset = (path: string) => `${BASE_PATH}${path}`;
 
 const copy = {
   es: {
@@ -36,7 +37,7 @@ const copy = {
     workBody:
       "FPV, cobertura live, cámara y postproducción. Cada proyecto se opera desde adentro.",
     play: "Ver en YouTube",
-    youtubePending: "Preview disponible. Agrega el enlace de YouTube para reproducir esta pieza.",
+    youtubePending: "ENLACE DE YOUTUBE PENDIENTE",
     liveA: "No miramos",
     liveB: "el show.",
     liveC: "Operamos dentro.",
@@ -80,7 +81,7 @@ const copy = {
     workBody:
       "FPV, live coverage, camera and postproduction. Every project is operated from the inside.",
     play: "Watch on YouTube",
-    youtubePending: "Preview available. Add the YouTube link to play this piece.",
+    youtubePending: "YOUTUBE LINK PENDING",
     liveA: "We do not watch",
     liveB: "the show.",
     liveC: "We operate inside.",
@@ -111,42 +112,36 @@ const projects: Project[] = [
   {
     title: "AFTERMOVIE",
     type: "LIVE / ARTIST / CAMERA",
-    image: "/assets/new/aftermovie-live.png",
     youtubeUrl: youtubeLinks.aftermovie,
     shape: "wide",
   },
   {
     title: "MYKE TOWERS",
     type: "LIVE / ARTIST / CAMERA",
-    image: "/assets/v63/myke-bw.jpg",
     youtubeUrl: youtubeLinks.mykeTowers,
     shape: "wide",
   },
   {
     title: "DJ SNAKE",
     type: "LIVE / FESTIVAL / FPV",
-    image: "/assets/new/snake-fpv.jpg",
     youtubeUrl: youtubeLinks.djSnake,
     shape: "wide",
   },
   {
     title: "FASHION",
     type: "FASHION / LIFESTYLE / CAMERA",
-    image: "/assets/v63/campaign-01.jpg",
     youtubeUrl: youtubeLinks.fashion,
     shape: "square",
   },
   {
     title: "MODELING",
     type: "CLOTHING / MODELING / CAMERA",
-    image: "/assets/v63/campaign-04.jpg",
     youtubeUrl: youtubeLinks.modeling,
     shape: "wide",
   },
   {
     title: "FIREWORKS",
     type: "EMF / PYRO / FPV",
-    image: "/assets/v63/fireworks-emf.jpg",
     youtubeUrl: youtubeLinks.fireworks,
     shape: "portrait",
   },
@@ -156,31 +151,26 @@ const archive: Project[] = [
   {
     title: "LIVE SESSION",
     type: "PERFORMANCE / STAGE / CAMERA",
-    image: "/assets/new/live-session.png",
     youtubeUrl: youtubeLinks.liveSession,
   },
   {
     title: "BRAND EXPERIENCE",
     type: "EVENT / LIFESTYLE / CAMERA",
-    image: "/assets/new/brand-experience.png",
     youtubeUrl: youtubeLinks.brandExperience,
   },
   {
     title: "SUBTRONICS",
     type: "LIVE / STAGE / SOCIAL",
-    image: "/assets/new/subtronics.jpg",
     youtubeUrl: youtubeLinks.subtronics,
   },
   {
     title: "YANDEL",
     type: "LIVE / ARTIST / CAMERA",
-    image: "/assets/new/yandel.jpg",
     youtubeUrl: youtubeLinks.yandel,
   },
   {
     title: "ED SHEERAN",
     type: "LIVE / VENUE / COVERAGE",
-    image: "/assets/new/ed-sheeran.jpg",
     youtubeUrl: youtubeLinks.edSheeran,
   },
 ];
@@ -203,12 +193,12 @@ function Arrow({ down = false }: { down?: boolean }) {
   return <span aria-hidden="true">{down ? "↘" : "↗"}</span>;
 }
 
-function getYouTubeEmbedUrl(value: string): string | null {
+function getYouTubeId(value: string): string | null {
   const input = value.trim();
   if (!input) return null;
 
   if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-    return `https://www.youtube-nocookie.com/embed/${input}?autoplay=1&rel=0`;
+    return input;
   }
 
   try {
@@ -220,12 +210,22 @@ function getYouTubeEmbedUrl(value: string): string | null {
       const marker = parts.findIndex((part) => part === "shorts" || part === "embed" || part === "live");
       if (marker >= 0) id = parts[marker + 1];
     }
-    return id && /^[a-zA-Z0-9_-]{11}$/.test(id)
-      ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`
-      : null;
+    return id && /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : null;
   } catch {
     return null;
   }
+}
+
+function getYouTubeEmbedUrl(value: string): string | null {
+  const id = getYouTubeId(value);
+  return id
+    ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&playsinline=1&rel=0&modestbranding=1&start=1&end=7`
+    : null;
+}
+
+function getYouTubeWatchUrl(value: string): string | null {
+  const id = getYouTubeId(value);
+  return id ? `https://www.youtube.com/watch?v=${id}` : null;
 }
 
 export default function Home() {
@@ -233,10 +233,10 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [modal, setModal] = useState<{ title: string; youtubeUrl: string; image: string } | null>(null);
   const [scrollPercent, setScrollPercent] = useState(0);
   const t = copy[locale];
-  const modalEmbedUrl = modal ? getYouTubeEmbedUrl(modal.youtubeUrl) : null;
+  const mendivilEmbedUrl = getYouTubeEmbedUrl(youtubeLinks.mendivil);
+  const mendivilWatchUrl = getYouTubeWatchUrl(youtubeLinks.mendivil);
 
   useEffect(() => {
     let current = 0;
@@ -296,23 +296,18 @@ export default function Home() {
   }, [locale]);
 
   useEffect(() => {
-    document.body.classList.toggle("is-locked", menuOpen || Boolean(modal));
+    document.body.classList.toggle("is-locked", menuOpen);
     return () => document.body.classList.remove("is-locked");
-  }, [menuOpen, modal]);
+  }, [menuOpen]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      setModal(null);
       setMenuOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-
-  const openYouTube = (title: string, youtubeUrl: string, image: string) => {
-    setModal({ title, youtubeUrl, image });
-  };
 
   const navTargets = ["work", "services", "method", "contact"];
 
@@ -373,7 +368,7 @@ export default function Home() {
       <main>
         <section className="hero" id="top">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/new/signal-burst.jpg" alt="" aria-hidden="true" />
+          <img src={asset("/assets/new/signal-burst.jpg")} alt="" aria-hidden="true" />
           <div className="hero__wash" />
           <div className="hero__telemetry hero__telemetry--left"><span>REC ●</span><span>CAM 01 / FPV</span><span>4K / 60</span></div>
           <div className="hero__telemetry hero__telemetry--right"><span>LAT 14.6349</span><span>LON -90.5069</span><span>ALT 32M</span></div>
@@ -391,7 +386,7 @@ export default function Home() {
 
         <section className="cinema-statement reveal">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/new/mendivil-fpv.jpg" alt="" aria-hidden="true" />
+          <img src={asset("/assets/new/mendivil-fpv.jpg")} alt="" aria-hidden="true" />
           <div className="cinema-statement__shade" />
           <div className="cinema-statement__copy">
             <span className="section-index">{t.introLabel}</span>
@@ -413,32 +408,57 @@ export default function Home() {
             <p>{t.workBody}</p>
           </header>
           <div className="project-grid">
-            {projects.map((project, index) => (
-              <button className={`project project--${project.shape} reveal`} key={project.title} type="button" onClick={() => openYouTube(project.title, project.youtubeUrl, project.image)} aria-label={`${t.play}: ${project.title}`}>
-                <span className="project__blur" style={{ backgroundImage: `url(${project.image})` }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="project__image" src={project.image} alt="" aria-hidden="true" />
-                <span className="project__shade" />
-                <span className="project__number">0{index + 1}</span>
-                <span className="project__meta"><small>{project.type}</small><strong>{project.title}</strong></span>
-                <span className="project__play"><b>▶</b><span>{t.play}</span></span>
-              </button>
-            ))}
+            {projects.map((project, index) => {
+              const embedUrl = getYouTubeEmbedUrl(project.youtubeUrl);
+              const watchUrl = getYouTubeWatchUrl(project.youtubeUrl);
+              return (
+                <a
+                  className={`project project--${project.shape} reveal ${watchUrl ? "" : "is-pending"}`}
+                  key={project.title}
+                  href={watchUrl ?? undefined}
+                  target={watchUrl ? "_blank" : undefined}
+                  rel={watchUrl ? "noopener noreferrer" : undefined}
+                  aria-label={`${t.play}: ${project.title}`}
+                  aria-disabled={!watchUrl}
+                >
+                  {embedUrl ? (
+                    <iframe
+                      className="youtube-miniclip"
+                      src={embedUrl}
+                      title={`Preview de ${project.title}`}
+                      loading="lazy"
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <span className="youtube-placeholder"><b>YOUTUBE</b><small>{t.youtubePending}</small></span>
+                  )}
+                  <span className="project__shade" />
+                  <span className="project__number">0{index + 1}</span>
+                  <span className="project__meta"><small>{project.type}</small><strong>{project.title}</strong></span>
+                  <span className="project__play"><b>▶</b><span>{t.play}</span></span>
+                </a>
+              );
+            })}
           </div>
         </section>
 
         <section className="live-portal reveal">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/new/mendivil-fpv.jpg" alt="" aria-hidden="true" />
+          {mendivilEmbedUrl ? (
+            <iframe className="youtube-miniclip" src={mendivilEmbedUrl} title="Preview de Mendivil" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" tabIndex={-1} aria-hidden="true" />
+          ) : (
+            <div className="youtube-placeholder"><b>YOUTUBE</b><small>{t.youtubePending}</small></div>
+          )}
           <div className="live-portal__shade" />
           <div className="scan-line" aria-hidden="true" />
           <div className="live-portal__copy">
             <span className="section-index">LIVE / FPV / ONE CHANCE</span>
             <h2>{t.liveA}<br />{t.liveB}<br /><em>{t.liveC}</em></h2>
           </div>
-          <button className="play-orbit" type="button" onClick={() => openYouTube("MENDIVIL — FPV CUT", youtubeLinks.mendivil, "/assets/new/mendivil-fpv.jpg")} aria-label={`${t.play}: Mendivil`}>
+          <a className={`play-orbit ${mendivilWatchUrl ? "" : "is-pending"}`} href={mendivilWatchUrl ?? undefined} target={mendivilWatchUrl ? "_blank" : undefined} rel={mendivilWatchUrl ? "noopener noreferrer" : undefined} aria-label={`${t.play}: Mendivil`} aria-disabled={!mendivilWatchUrl}>
             <span>MENDIVIL</span><b>▶</b>
-          </button>
+          </a>
           <div className="live-portal__data">ALT 18.4M<br />VEL 61 KM/H<br /><span>REC ●</span></div>
         </section>
 
@@ -448,13 +468,20 @@ export default function Home() {
             <p>{t.archiveBody}</p>
           </header>
           <div className="archive-list">
-            {archive.map((film, index) => (
-              <button className="archive-row reveal" key={film.title} type="button" onClick={() => openYouTube(film.title, film.youtubeUrl, film.image)}>
-                <small>0{index + 1}</small><strong>{film.title}</strong><span>{film.type}</span><Arrow />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={film.image} alt="" aria-hidden="true" />
-              </button>
-            ))}
+            {archive.map((film, index) => {
+              const embedUrl = getYouTubeEmbedUrl(film.youtubeUrl);
+              const watchUrl = getYouTubeWatchUrl(film.youtubeUrl);
+              return (
+                <a className={`archive-row reveal ${watchUrl ? "" : "is-pending"}`} key={film.title} href={watchUrl ?? undefined} target={watchUrl ? "_blank" : undefined} rel={watchUrl ? "noopener noreferrer" : undefined} aria-disabled={!watchUrl}>
+                  <small>0{index + 1}</small><strong>{film.title}</strong><span>{film.type}</span><Arrow />
+                  {embedUrl ? (
+                    <iframe className="youtube-miniclip" src={embedUrl} title={`Preview de ${film.title}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" tabIndex={-1} aria-hidden="true" />
+                  ) : (
+                    <span className="archive-row__pending">YOUTUBE</span>
+                  )}
+                </a>
+              );
+            })}
           </div>
         </section>
 
@@ -526,28 +553,6 @@ export default function Home() {
         <i aria-hidden="true">↗</i>
       </a>
 
-      <div className={`media-modal ${modal ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modal} aria-label="REDKAM YouTube player">
-        <header><span>{modal?.title ?? "REDKAM CUT"}</span><button type="button" onClick={() => setModal(null)}>{t.close} <b>×</b></button></header>
-        <div className="media-modal__stage">
-          {modalEmbedUrl ? (
-            <iframe
-              key={modalEmbedUrl}
-              src={modalEmbedUrl}
-              title={modal?.title ?? "REDKAM YouTube video"}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
-          ) : modal ? (
-            <div className="youtube-preview">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={modal.image} alt={`Preview de ${modal.title}`} />
-              <div><span>YOUTUBE / PREVIEW</span><strong>{modal.title}</strong><p>{t.youtubePending}</p></div>
-            </div>
-          ) : null}
-        </div>
-        <div className="media-modal__rail"><i /></div>
-      </div>
     </>
   );
 }
