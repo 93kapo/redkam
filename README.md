@@ -1,6 +1,8 @@
-# REDKAM — Cinema Portfolio
+# REDKAM — Portafolio audiovisual
 
-Portafolio audiovisual inmersivo de REDKAM para aftermovies, documental, fotografía, FPV y drone. El proyecto incluye transiciones, videos optimizados para web, navegación en español/inglés y diseño adaptable para móvil y escritorio.
+Portafolio audiovisual independiente de REDKAM para aftermovies, documental, fotografía, FPV y drone. Incluye navegación en español/inglés, previews en imagen, reproducción desde YouTube, diseño adaptable y contacto directo por WhatsApp.
+
+Esta versión no contiene autenticación, lectura del correo de visitantes, conectores ni base de datos.
 
 ## Requisitos
 
@@ -16,12 +18,13 @@ pnpm dev
 
 Abre la dirección local que aparece en la terminal.
 
-## Verificar la versión final
+## Crear la versión estática
 
 ```bash
 pnpm build
-pnpm test
 ```
+
+El resultado estático se genera en la carpeta `out`.
 
 ## Subir a GitHub
 
@@ -42,14 +45,23 @@ Reemplaza `TU-USUARIO` y `TU-REPOSITORIO` por los datos de tu cuenta. También p
 
 - `app/page.tsx`: contenido, proyectos e interacciones.
 - `app/globals.css`: dirección visual, animaciones y diseño adaptable.
-- `public/assets/`: imágenes y videos del portafolio.
+- `app/youtube-links.ts`: único archivo donde se pegan los enlaces de YouTube.
+- `public/assets/`: imágenes ligeras usadas como preview.
 - `public/og.png`: imagen que aparece al compartir el enlace.
-- `.openai/hosting.json`: configuración del proyecto publicado con Sites.
+- `next.config.ts`: configuración para generar una versión estática.
 
-Los videos añadidos recientemente ya están optimizados y cada archivo está por debajo de 20 MB. No hace falta incluir los archivos originales de más de 190 MB ni los recursos antiguos de Domino’s.
+No hay archivos `.mp4` ni `.webm` dentro del proyecto. Todo el material audiovisual se reproduce desde YouTube.
 
-El ZIP se debe descomprimir antes de subir el proyecto. Consulta `SUBIR-A-GITHUB.md` para ver el proceso recomendado.
+## Agregar los enlaces de YouTube
+
+Abre `app/youtube-links.ts` y pega cada enlace entre las comillas correspondientes. La página acepta enlaces normales de YouTube, `youtu.be`, Shorts y transmisiones. Si un enlace todavía está vacío, la página muestra la imagen de preview sin intentar cargar un archivo pesado.
+
+Consulta `SUBIR-A-GITHUB.md` para ver el proceso recomendado.
+
+## Contacto
+
+Los botones de cotización abren una conversación de WhatsApp con el número `+502 3405 6149` y un mensaje inicial listo para enviar.
 
 ## Tecnología
 
-El sitio usa React, Next.js y vinext, con salida compatible con Cloudflare Workers y OpenAI Sites. No necesita variables de entorno ni base de datos para mostrar el portafolio.
+El sitio usa React y Next.js con exportación estática. No necesita cuentas, variables de entorno ni base de datos para mostrar el portafolio.
