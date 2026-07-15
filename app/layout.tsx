@@ -21,21 +21,21 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: base,
-    title: "REDKAM — Production + Execution Unit",
+    title: "REDKAM — Aftermovie, Documental, Foto, FPV y Drone",
     description:
-      "Unidad de producción y ejecución audiovisual especializada en FPV, drone, cámara y postproducción desde Guatemala.",
+      "Portafolio audiovisual de REDKAM: aftermovie, documental, fotografía, FPV y drone desde Guatemala.",
     applicationName: "REDKAM",
     openGraph: {
       type: "website",
       locale: "es_GT",
-      title: "REDKAM — Production + Execution Unit",
-      description: "Entramos donde las cámaras no.",
-      images: [{ url: socialImage, width: 1731, height: 909, alt: "REDKAM — Entramos donde las cámaras no." }],
+      title: "REDKAM — Aftermovie, Documental, Foto, FPV y Drone",
+      description: "Aftermovie • Documental • Foto • FPV • Drone",
+      images: [{ url: socialImage, width: 1731, height: 909, alt: "REDKAM — Aftermovie, Documental, Foto, FPV y Drone" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "REDKAM — Production + Execution Unit",
-      description: "Entramos donde las cámaras no.",
+      title: "REDKAM — Aftermovie, Documental, Foto, FPV y Drone",
+      description: "Aftermovie • Documental • Foto • FPV • Drone",
       images: [socialImage],
     },
   };

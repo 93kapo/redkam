@@ -199,6 +199,7 @@
     line-height: .74;
     text-transform: uppercase;
   }
+  .hero h1 { font-size: clamp(80px, 12vw, 210px); }
   .hero h1 span, .hero h1 em { display: block; font-style: normal; }
   .hero h1 em, .cinema-statement h2 em, .live-portal h2 em, .contact h2 em { color: transparent; -webkit-text-stroke: 1px rgba(240,237,229,.84); font-style: normal; }
   .hero__bottom { display: grid; grid-template-columns: minmax(250px, 530px) auto; gap: 42px; align-items: end; margin-top: 30px; }
@@ -241,7 +242,7 @@
 
   .manifesto { min-height: 72svh; padding: clamp(90px, 12vw, 180px) var(--pad); border-bottom: 1px solid var(--line); background: #080808; }
   .manifesto__quiet { margin-top: 80px; color: var(--soft); font-size: clamp(18px, 2vw, 31px); line-height: 1.25; }
-  .manifesto__loud { margin-top: 24px; font-size: clamp(54px, 8.2vw, 140px); font-weight: 900; letter-spacing: -.075em; line-height: .82; text-transform: uppercase; }
+  .manifesto__loud { margin-top: clamp(48px, 7vw, 90px); font-size: clamp(54px, 8.2vw, 140px); font-weight: 900; letter-spacing: -.075em; line-height: .82; text-transform: uppercase; }
   .manifesto__loud span { color: var(--red); }
   .manifesto__line { height: 1px; margin-top: 70px; overflow: hidden; background: var(--line); }
   .manifesto__line i { display: block; width: 38%; height: 100%; background: var(--red); transform: translateX(-100%); transition: transform 1.4s .3s var(--ease); }

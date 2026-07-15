@@ -9,6 +9,7 @@ type Project = {
   type: string;
   image: string;
   video: string;
+  mediaType?: "video/mp4" | "video/webm";
   shape?: "wide" | "portrait" | "square";
 };
 
@@ -17,12 +18,8 @@ const copy = {
     nav: ["Trabajo", "Servicios", "Operación", "Contacto"],
     soundOn: "Sonido ON",
     soundOff: "Sonido",
-    eyebrow: "FPV · DRONE · CAMERA UNIT · POST",
-    heroA: "Entramos donde",
-    heroB: "las cámaras",
-    heroC: "no.",
-    heroBody:
-      "Producción y operación audiovisual especializada para eventos, marcas y campañas.",
+    heroTitle: "REDKAM",
+    heroBody: "Aftermovie • Documental • Foto • FPV • Drone",
     viewWork: "Explorar trabajos",
     signal: "SEÑAL 06 / EN VIVO",
     introLabel: "00 / EXECUTION UNIT",
@@ -30,7 +27,6 @@ const copy = {
     introTitleB: "Nuestra ejecución.",
     introBody:
       "Nos integramos al brief, la producción y los lineamientos de tu marca para ejecutar una cobertura imposible de ignorar.",
-    manifestoQuiet: "No vendemos conceptos que no fueron contratados.",
     manifestoA: "Brief. Coordinación.",
     manifestoB: "Captura. Entrega.",
     workIndex: "01 / SELECTED WORK",
@@ -67,12 +63,8 @@ const copy = {
     nav: ["Work", "Services", "Operation", "Contact"],
     soundOn: "Sound ON",
     soundOff: "Sound",
-    eyebrow: "FPV · DRONE · CAMERA UNIT · POST",
-    heroA: "We enter where",
-    heroB: "cameras",
-    heroC: "cannot.",
-    heroBody:
-      "Specialized audiovisual production and operation for events, brands and campaigns.",
+    heroTitle: "REDKAM",
+    heroBody: "Aftermovie • Documentary • Photo • FPV • Drone",
     viewWork: "Explore the work",
     signal: "SIGNAL 06 / LIVE",
     introLabel: "00 / EXECUTION UNIT",
@@ -80,7 +72,6 @@ const copy = {
     introTitleB: "Our execution.",
     introBody:
       "We join your brief, production and brand guidelines to execute coverage that is impossible to ignore.",
-    manifestoQuiet: "We do not sell concepts that were not commissioned.",
     manifestoA: "Brief. Coordination.",
     manifestoB: "Capture. Delivery.",
     workIndex: "01 / SELECTED WORK",
@@ -117,6 +108,13 @@ const copy = {
 
 const projects: Project[] = [
   {
+    title: "AFTERMOVIE",
+    type: "LIVE / ARTIST / CAMERA",
+    image: "/assets/new/aftermovie-live.png",
+    video: "/assets/new/aftermovie-live.mp4",
+    shape: "wide",
+  },
+  {
     title: "MYKE TOWERS",
     type: "LIVE / ARTIST / CAMERA",
     image: "/assets/v63/myke-bw.jpg",
@@ -131,22 +129,43 @@ const projects: Project[] = [
     shape: "wide",
   },
   {
+    title: "FASHION",
+    type: "FASHION / LIFESTYLE / CAMERA",
+    image: "/assets/v63/campaign-01.jpg",
+    video: "/assets/v63/campaign-01.mp4",
+    shape: "square",
+  },
+  {
+    title: "MODELING",
+    type: "CLOTHING / MODELING / CAMERA",
+    image: "/assets/v63/campaign-04.jpg",
+    video: "/assets/v63/campaign-04.mp4",
+    shape: "wide",
+  },
+  {
     title: "FIREWORKS",
     type: "EMF / PYRO / FPV",
     image: "/assets/v63/fireworks-emf.jpg",
     video: "/assets/v63/fireworks-emf.mp4",
     shape: "portrait",
   },
-  {
-    title: "CAMPAIGN 01",
-    type: "FASHION / LIFESTYLE / CAMERA",
-    image: "/assets/v63/campaign-01.jpg",
-    video: "/assets/v63/campaign-01.mp4",
-    shape: "square",
-  },
 ];
 
-const archive = [
+const archive: Project[] = [
+  {
+    title: "LIVE SESSION",
+    type: "PERFORMANCE / STAGE / CAMERA",
+    image: "/assets/new/live-session.png",
+    video: "/assets/new/live-session.webm",
+    mediaType: "video/webm",
+  },
+  {
+    title: "BRAND EXPERIENCE",
+    type: "EVENT / LIFESTYLE / CAMERA",
+    image: "/assets/new/brand-experience.png",
+    video: "/assets/new/brand-experience.webm",
+    mediaType: "video/webm",
+  },
   {
     title: "SUBTRONICS",
     type: "LIVE / STAGE / SOCIAL",
@@ -164,12 +183,6 @@ const archive = [
     type: "LIVE / VENUE / COVERAGE",
     image: "/assets/new/ed-sheeran.jpg",
     video: "/assets/new/ed-sheeran.mp4",
-  },
-  {
-    title: "YANDEL + KAPO",
-    type: "LIVE / ARTIST / SOCIAL",
-    image: "/assets/new/yandel-kapo.jpg",
-    video: "/assets/new/yandel-kapo.mp4",
   },
 ];
 
@@ -376,12 +389,7 @@ export default function Home() {
           <div className="hero__telemetry hero__telemetry--right"><span>LAT 14.6349</span><span>LON -90.5069</span><span>ALT 32M</span></div>
           <div className="hero__signal"><i />{t.signal}</div>
           <div className="hero__content">
-            <p className="eyebrow">{t.eyebrow}</p>
-            <h1 aria-label={`${t.heroA} ${t.heroB} ${t.heroC}`}>
-              <span>{t.heroA}</span>
-              <em>{t.heroB}</em>
-              <span>{t.heroC}</span>
-            </h1>
+            <h1 aria-label={t.heroTitle}><span>{t.heroTitle}</span></h1>
             <div className="hero__bottom">
               <p>{t.heroBody}</p>
               <a className="line-link" href="#work"><span>{t.viewWork}</span><Arrow down /></a>
@@ -406,7 +414,6 @@ export default function Home() {
 
         <section className="manifesto reveal" aria-label="Manifesto">
           <span className="section-index">THE SCOPE / CLEAR</span>
-          <p className="manifesto__quiet">{t.manifestoQuiet}</p>
           <p className="manifesto__loud">{t.manifestoA}<br /><span>{t.manifestoB}</span></p>
           <div className="manifesto__line"><i /></div>
         </section>
@@ -421,7 +428,7 @@ export default function Home() {
               <button className={`project project--${project.shape} reveal`} key={project.title} type="button" onClick={() => openVideo(project.title, project.video)} aria-label={`${t.play}: ${project.title}`}>
                 <span className="project__blur" style={{ backgroundImage: `url(${project.image})` }} />
                 <video muted loop playsInline preload="metadata" poster={project.image}>
-                  <source src={project.video} type="video/mp4" />
+                  <source src={project.video} type={project.mediaType ?? "video/mp4"} />
                 </video>
                 <span className="project__shade" />
                 <span className="project__number">0{index + 1}</span>
