@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RK SUITE · Speed ramps, subtítulos y música para DaVinci Resolve</title>
+<meta name="description" content="RK SUITE es el plugin para DaVinci Resolve Studio que crea speed ramps, subtítulos, marcadores de beats y mezclas de música en un clic. Licencia de pago único para 2 Macs.">
+<meta name="theme-color" content="#0E0F13">
+<meta property="og:title" content="RK SUITE · Speed ramps, subtítulos y música para DaVinci Resolve">
+<meta property="og:description" content="Speed ramps, subtítulos, beats y Automix en un clic. Plugin para DaVinci Resolve Studio en Mac. 49.99 USD, pago único.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="logo.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<style>
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+:root{
+  --bg:#0E0F13;--bg2:#14161C;--panel:#181A21;--line:#262932;--txt:#F5F5F7;--mut:#9599A5;--lime:#B7F36B;--lime2:#8fd94a;--ink:#0b0d08;
+  --m-fast:140ms;--m-base:260ms;--m-slow:640ms;--ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --r:18px;--max:1120px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",system-ui,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font:17px/1.6 var(--font);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+section{position:relative;padding:112px 0}
+h1,h2,h3{line-height:1.08;letter-spacing:-.025em;font-weight:700}
+h1{font-size:clamp(40px,7vw,84px)}
+h2{font-size:clamp(30px,4.6vw,52px);margin-bottom:16px}
+h3{font-size:21px;letter-spacing:-.01em}
+.lead{color:var(--mut);font-size:clamp(17px,2vw,21px);max-width:640px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin-bottom:20px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 0 rgba(183,243,107,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(183,243,107,0)}100%{box-shadow:0 0 0 0 rgba(183,243,107,0)}}
+
+/* cabecera */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background var(--m-base),backdrop-filter var(--m-base),border-color var(--m-base);border-bottom:1px solid transparent}
+header.s{background:rgba(14,15,19,.72);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:-.01em}
+.brand img{width:34px;height:34px;transition:transform var(--m-base) var(--spring)}
+.brand:hover img{transform:rotate(-8deg) scale(1.08)}
+.nav nav{display:flex;align-items:center;gap:6px}
+.nav nav a{padding:8px 14px;border-radius:999px;color:var(--mut);font-size:15px;transition:color var(--m-fast),background var(--m-fast)}
+.nav nav a:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+.lang{border:1px solid var(--line);background:transparent;color:var(--txt);font:600 13px var(--mono);padding:8px 12px;border-radius:999px;cursor:pointer;transition:border-color var(--m-fast),transform var(--m-fast) var(--spring)}
+.lang:hover{border-color:var(--lime)}.lang:active{transform:scale(.94)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:999px;font:600 17px var(--font);cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--txt);position:relative;overflow:hidden;transition:transform var(--m-base) var(--spring),box-shadow var(--m-base),border-color var(--m-fast),background var(--m-fast)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(0) scale(.97)}
+.btn.p{background:var(--lime);color:var(--ink);border-color:var(--lime);box-shadow:0 10px 40px -10px rgba(183,243,107,.55)}
+.btn.p:hover{box-shadow:0 16px 54px -8px rgba(183,243,107,.75)}
+.btn.p::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);animation:shine 4.5s var(--ease) 1.6s infinite}
+@keyframes shine{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.btn.g:hover{border-color:var(--lime);background:rgba(183,243,107,.06)}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+
+/* hero */
+.hero{padding:150px 0 70px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;pointer-events:none;will-change:transform}
+.o1{width:520px;height:520px;background:radial-gradient(circle,#B7F36B66,transparent 70%);top:-120px;right:-120px;animation:float1 16s ease-in-out infinite}
+.o2{width:480px;height:480px;background:radial-gradient(circle,#5ab0ff44,transparent 70%);bottom:-200px;left:-160px;animation:float2 20s ease-in-out infinite}
+@keyframes float1{50%{transform:translate(-60px,50px) scale(1.15)}}
+@keyframes float2{50%{transform:translate(70px,-40px) scale(1.1)}}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;opacity:.28;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 70%)}
+.hero .wrap{position:relative}
+.w{display:inline-block;opacity:0;transform:translateY(.6em) rotate(2deg);filter:blur(8px);animation:wi var(--m-slow) var(--ease) forwards}
+@keyframes wi{to{opacity:1;transform:none;filter:none}}
+.lime{color:var(--lime)}
+.trust{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:34px;color:var(--mut);font-size:15px}
+.trust span{display:flex;align-items:center;gap:8px}
+.trust svg{width:18px;height:18px;stroke:var(--lime);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* demo de la rampa */
+.demo{margin-top:64px;background:linear-gradient(180deg,var(--panel),#12141a);border:1px solid var(--line);border-radius:26px;padding:26px 26px 20px;box-shadow:0 40px 120px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.04);position:relative}
+.demo-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font:600 13px var(--mono);color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.dots{display:flex;gap:7px}.dots i{width:11px;height:11px;border-radius:50%;background:#2d3039}
+.speed{font:700 30px var(--mono);color:var(--lime);min-width:5.6ch;text-align:right;letter-spacing:-.02em}
+.speed small{font-size:15px;color:var(--mut);margin-left:4px}
+.curve{width:100%;height:auto;display:block;overflow:visible}
+.curve .grid{stroke:#23262f;stroke-width:1}
+.curve .area{fill:url(#ga);opacity:0}
+.curve .ln{fill:none;stroke:var(--lime);stroke-width:4;stroke-linecap:round;filter:drop-shadow(0 0 10px rgba(183,243,107,.55))}
+.curve .dot{fill:#fff;filter:drop-shadow(0 0 12px var(--lime))}
+.strip{margin-top:10px;height:78px;border-radius:12px;overflow:hidden;position:relative;background:#0b0c10;border:1px solid var(--line)}
+.strip .film{position:absolute;inset:0;background-image:linear-gradient(90deg,transparent 0,transparent 74px,#07080b 74px,#07080b 80px),linear-gradient(135deg,#2a3a1d,#1b2f3f 50%,#3a2740);background-size:80px 100%,160px 100%;will-change:background-position}
+.strip .film::before,.strip .film::after{content:"";position:absolute;left:0;right:0;height:9px;background-image:radial-gradient(circle,#0b0c10 3px,transparent 3.5px);background-size:20px 9px}
+.strip .film::before{top:3px}.strip .film::after{bottom:3px}
+.strip .mark{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--lime);box-shadow:0 0 16px var(--lime)}
+.demo-cap{margin-top:14px;font-size:14px;color:var(--mut);text-align:center}
+
+/* cuatro módulos */
+.sec-h{max-width:720px;margin-bottom:56px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.card{--mx:50%;--my:50%;position:relative;padding:30px 26px 28px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:transform var(--m-base) var(--ease),border-color var(--m-base)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx) var(--my),rgba(183,243,107,.16),transparent 60%);opacity:0;transition:opacity var(--m-base)}
+.card:hover{transform:translateY(-6px);border-color:#3a4a28}.card:hover::before{opacity:1}
+.ic{width:52px;height:52px;border-radius:14px;background:rgba(183,243,107,.1);display:grid;place-items:center;margin-bottom:20px;transition:transform var(--m-base) var(--spring)}
+.card:hover .ic{transform:scale(1.1) rotate(-6deg)}
+.ic svg{width:26px;height:26px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card p{color:var(--mut);font-size:16px;margin-top:10px}
+
+/* pasos */
+.steps{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;--p:0}
+.steps::before{content:"";position:absolute;left:0;right:0;top:27px;height:2px;background:var(--line)}
+.steps::after{content:"";position:absolute;left:0;top:27px;height:2px;width:calc(var(--p)*100%);background:var(--lime);box-shadow:0 0 14px var(--lime);transition:width .2s linear}
+.step{position:relative}
+.step b{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--bg);border:2px solid var(--line);font:700 22px var(--mono);color:var(--mut);margin-bottom:22px;position:relative;z-index:1;transition:all var(--m-base) var(--spring)}
+.step.on b{border-color:var(--lime);color:var(--ink);background:var(--lime);transform:scale(1.08);box-shadow:0 0 30px rgba(183,243,107,.5)}
+.step p{color:var(--mut);margin-top:8px;font-size:16px}
+
+/* precio */
+.price-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.price{--ang:0deg;position:relative;border-radius:28px;padding:2px;background:conic-gradient(from var(--ang),#B7F36B,#5ab0ff,#B7F36B 50%,#2a2d35 75%,#B7F36B);animation:spin 6s linear infinite}
+@keyframes spin{to{--ang:360deg}}
+.price-in{background:var(--bg2);border-radius:26px;padding:38px 34px}
+.amount{display:flex;align-items:baseline;gap:8px;margin:8px 0 6px}
+.amount .n{font:800 clamp(56px,8vw,84px)/1 var(--font);letter-spacing:-.04em}
+.amount .u{color:var(--mut);font:600 20px var(--font)}
+.price ul{list-style:none;margin:24px 0 30px;display:grid;gap:13px}
+.price li{display:flex;gap:12px;align-items:flex-start;font-size:16.5px}
+.price li svg{flex:none;width:22px;height:22px;stroke:var(--lime);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.price .btn{width:100%}
+.fine{color:var(--mut);font-size:13.5px;margin-top:14px;text-align:center}
+.req{display:grid;gap:14px}
+.req div{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:14px;background:var(--panel);border:1px solid var(--line);transition:border-color var(--m-base),transform var(--m-base) var(--ease)}
+.req div:hover{border-color:#3a4a28;transform:translateX(6px)}
+.req svg{flex:none;width:26px;height:26px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.req b{display:block;font-size:16.5px}.req span{color:var(--mut);font-size:15px}
+
+/* faq */
+.faq{max-width:780px;margin:0 auto}
+.q{border-bottom:1px solid var(--line)}
+.q button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 4px;font:600 19px var(--font);cursor:pointer;transition:color var(--m-fast)}
+.q button:hover{color:var(--lime)}.q button:focus-visible{outline:2px solid var(--lime);border-radius:8px}
+.q button svg{flex:none;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;transition:transform var(--m-base) var(--ease)}
+.q.open button svg{transform:rotate(45deg)}
+.a{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--m-base) var(--ease)}
+.q.open .a{grid-template-rows:1fr}
+.a>div{overflow:hidden}.a p{color:var(--mut);padding:0 4px 24px;font-size:16.5px}
+
+footer{border-top:1px solid var(--line);padding:48px 0;color:var(--mut);font-size:15px}
+.fgrid{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center}
+.fl{display:flex;flex-wrap:wrap;gap:8px 24px}.fl a:hover{color:var(--lime)}
+
+/* revelado al hacer scroll */
+.rv{opacity:0;transform:translateY(34px);filter:blur(6px);transition:opacity var(--m-slow) var(--ease),transform var(--m-slow) var(--ease),filter var(--m-slow) var(--ease);transition-delay:calc(var(--d,0)*70ms)}
+.rv.in{opacity:1;transform:none;filter:none}
+.noanim .rv,.noanim .w{opacity:1;transform:none;filter:none;animation:none;transition:none}
+
+@media (max-width:820px){
+  section{padding:80px 0}.hero{padding-top:120px}
+  .price-wrap{grid-template-columns:1fr}.nav nav a:not(.keep){display:none}
+  .steps::before,.steps::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv,.w{opacity:1!important;transform:none!important;filter:none!important}
+  .curve .ln{stroke-dashoffset:0!important}
+}
+</style>
+</head>
+<body>
+<header id="hd"><div class="wrap nav">
+  <a class="brand" href="#top" aria-label="RK SUITE"><img src="logo.svg" alt="" width="34" height="34"><span>RK SUITE</span></a>
+  <nav>
+    <a href="#modulos" data-i="n1">Qué hace</a><a href="#pasos" data-i="n2">Cómo se usa</a><a href="#precio" data-i="n3">Precio</a><a href="#faq" data-i="n4">Preguntas</a>
+    <button class="lang" id="lang" type="button" aria-label="Idioma / Language">EN</button>
+  </nav>
+</div></header>
+
+<main id="top">
+<section class="hero">
+  <div class="grid-bg"></div><div class="orb o1"></div><div class="orb o2"></div>
+  <div class="wrap">
+    <div class="eyebrow rv"><i></i><span data-i="eyebrow">Para DaVinci Resolve Studio · Mac con Apple Silicon</span></div>
+    <h1 id="h1" aria-label="Speed ramps, subtítulos y música. En un clic."></h1>
+    <p class="lead rv" style="--d:5;margin-top:26px" data-i="lead">RK SUITE convierte horas de edición en segundos. Hecho por un editor, pensado para que cualquiera lo entienda.</p>
+    <div class="cta rv" style="--d:6">
+      <a class="btn p" href="#precio" id="buy1" data-i="buy">Comprar · 49.99 USD</a>
+      <a class="btn g" href="#modulos" data-i="how">Ver qué hace</a>
+    </div>
+    <div class="trust rv" style="--d:7">
+      <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><b data-i="t1" style="font-weight:500">Pago único, sin suscripción</b></span>
+      <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><b data-i="t2" style="font-weight:500">Licencia para 2 Macs</b></span>
+      <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><b data-i="t3" style="font-weight:500">Todo se procesa en tu Mac</b></span>
+    </div>
+
+    <div class="demo rv" style="--d:8" aria-hidden="true">
+      <div class="demo-top"><div class="dots"><i></i><i></i><i></i></div><span>Speedramp</span><div class="speed"><span id="spd">1.0</span><small>×</small></div></div>
+      <svg class="curve" viewBox="0 0 640 220" preserveAspectRatio="none">
+        <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7F36B" stop-opacity=".35"/><stop offset="1" stop-color="#B7F36B" stop-opacity="0"/></linearGradient></defs>
+        <g class="grid"><path d="M0 55H640M0 110H640M0 165H640M160 0V220M320 0V220M480 0V220"/></g>
+        <path id="area" class="area" d="M0 190 C120 190 170 28 320 28 S520 190 640 190 V220 H0Z"/>
+        <path id="ln" class="ln" d="M0 190 C120 190 170 28 320 28 S520 190 640 190"/>
+        <circle id="dot" class="dot" r="9" cx="0" cy="190"/>
+      </svg>
+      <div class="strip"><div class="film" id="film"></div><div class="mark"></div></div>
+      <p class="demo-cap" data-i="cap">Dibujas la curva. Tu clip acelera y frena justo donde quieres.</p>
+    </div>
+  </div>
+</section>
+
+<section id="modulos">
+  <div class="wrap">
+    <div class="sec-h rv"><div class="eyebrow"><span data-i="m_e">Cuatro módulos</span></div><h2 data-i="m_h">Todo lo que necesitas. Nada que te estorbe.</h2><p class="lead" data-i="m_p">Cada módulo hace una cosa y tiene un botón verde. Lo demás está escondido hasta que lo necesites.</p></div>
+    <div class="cards">
+      <article class="card rv" style="--d:0"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 18C8 18 9 5 12 5s4 13 9 13"/><circle cx="12" cy="5" r="1.6" fill="currentColor"/></svg></div><h3 data-i="c1h">Speedramp</h3><p data-i="c1p">Dibuja una curva de velocidad y aplícala a tu clip. Se ajusta sola a la duración y sigue el ritmo de tu edición.</p></article>
+      <article class="card rv" style="--d:1"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 11h6M7 15h10"/></svg></div><h3 data-i="c2h">Subtítulos</h3><p data-i="c2p">Transcribe tu audio, elige el idioma y escribe los subtítulos en tu timeline, con animación palabra por palabra.</p></article>
+      <article class="card rv" style="--d:2"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></div><h3 data-i="c3h">Música</h3><p data-i="c3p">Marca los beats y compases, mezcla dos canciones con el tempo emparejado (Automix) y despídete con un reverb final.</p></article>
+      <article class="card rv" style="--d:3"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></div><h3 data-i="c4h">Sonidos</h3><p data-i="c4p">Añade efectos de sonido a tus transiciones y cortes, colocados justo donde suenan mejor.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="pasos" style="background:linear-gradient(180deg,transparent,var(--bg2) 20%,var(--bg2) 80%,transparent)">
+  <div class="wrap">
+    <div class="sec-h rv"><div class="eyebrow"><span data-i="s_e">Tan simple como parece</span></div><h2 data-i="s_h">Tres pasos y estás editando.</h2></div>
+    <div class="steps" id="steps">
+      <div class="step rv" style="--d:0"><b>1</b><h3 data-i="s1h">Instala</h3><p data-i="s1p">Abre el instalador y sigue los pasos. Un doble clic y listo.</p></div>
+      <div class="step rv" style="--d:2"><b>2</b><h3 data-i="s2h">Ábrelo en Resolve</h3><p data-i="s2p">En Resolve ve a Workspace › Workflow Integrations › RK SUITE.</p></div>
+      <div class="step rv" style="--d:4"><b>3</b><h3 data-i="s3h">Pulsa el botón verde</h3><p data-i="s3p">Elige un módulo, ajusta si quieres y aplica. Siempre puedes deshacer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="precio">
+  <div class="wrap price-wrap">
+    <div class="price rv"><div class="price-in">
+      <div class="eyebrow"><span data-i="p_e">Licencia RK SUITE</span></div>
+      <div class="amount"><span class="n" id="n49">49.99</span><span class="u">USD</span></div>
+      <p style="color:var(--mut)" data-i="p_s">Un solo pago. Sin suscripción.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span data-i="p1">Funciona en <b>2 Macs</b> a la vez</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span data-i="p2">Todas las actualizaciones de la versión <b>1.x</b></span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span data-i="p3">Prueba de <b>7 días</b> antes de comprar</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span data-i="p4">Reembolso de <b>14 días</b>, sin preguntas</span></li>
+      </ul>
+      <a class="btn p" id="buy2" href="#" data-i="buy2">Comprar ahora</a>
+      <p class="fine" id="fine" data-i="fine">Pago seguro. Recibes tu llave y el instalador al instante.</p>
+    </div></div>
+    <div>
+      <div class="sec-h rv" style="margin-bottom:28px"><h2 data-i="r_h">Antes de comprar</h2></div>
+      <div class="req">
+        <div class="rv" style="--d:1"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><p><b data-i="r1h">Mac con Apple Silicon</b><span data-i="r1p">M1, M2, M3, M4 o M5. macOS 12 o superior.</span></p></div>
+        <div class="rv" style="--d:2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><b data-i="r2h">DaVinci Resolve Studio 21</b><span data-i="r2p">Los plugins de Resolve no funcionan en la versión gratuita.</span></p></div>
+        <div class="rv" style="--d:3"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><p><b data-i="r3h">Subtítulos y traducción</b><span data-i="r3p">Necesitan macOS 26 o superior. El resto funciona desde macOS 12.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-h rv" style="margin:0 auto 40px;text-align:center"><h2 data-i="f_h">Preguntas frecuentes</h2></div>
+    <div class="faq" id="faqs">
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q1">¿Funciona con la versión gratuita de DaVinci Resolve?</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p data-i="a1">No. Los plugins de Workflow Integration solo funcionan en DaVinci Resolve Studio, que es la versión de pago de Blackmagic.</p></div></div></div>
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q2">¿Y en Premiere Pro?</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p data-i="a2">Hoy RK SUITE es para DaVinci Resolve. La versión de Premiere Pro está en pruebas y llegará más adelante.</p></div></div></div>
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q3">¿Mis videos se suben a algún lado?</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p data-i="a3">No. Todo se procesa en tu Mac: tus videos, tu audio y tus subtítulos no salen de tu computadora. Solo se comprueba tu licencia por internet.</p></div></div></div>
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q4">¿Qué pasa si cambio de Mac?</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p data-i="a4">Tu llave sirve en 2 Macs. Desactiva uno desde el plugin y activa el nuevo cuando quieras.</p></div></div></div>
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q5">macOS dice que no puede verificar el instalador</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p data-i="a5">Es normal la primera vez: el instalador no está firmado con una cuenta de desarrollador de Apple. Ve a Ajustes del Sistema › Privacidad y seguridad, baja hasta el aviso del instalador y pulsa «Abrir de todos modos». Solo se pide una vez.</p></div></div></div>
+      <div class="q rv"><button type="button" aria-expanded="false"><span data-i="q6">¿Cómo recibo ayuda?</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="a"><div><p><span data-i="a6">Escríbenos a</span> <a href="mailto:alexanderpineda07@gmail.com" style="color:var(--lime)">alexanderpineda07@gmail.com</a>. <span data-i="a6b">Respondemos personalmente.</span></p></div></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap fgrid">
+  <div><b style="color:var(--txt)">RK SUITE</b> · <span data-i="fo">Hecho en Guatemala por REDKAM</span><br><span style="font-size:13.5px">Created by @93kapo · © <span id="yr"></span> REDKAM</span></div>
+  <div class="fl"><a href="terminos.html" data-i="l1">Términos de uso</a><a href="privacidad.html" data-i="l2">Privacidad</a><a href="reembolso.html" data-i="l3">Reembolsos</a><a href="https://github.com/93kapo/rk-suite/releases" rel="noopener">Novedades</a></div>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+// ───────── Configuración: cuando la tienda esté activa, pon aquí el enlace de pago ─────────
+var CHECKOUT_URL = "";   // p. ej. "https://tutienda.lemonsqueezy.com/checkout/buy/…" (vacío = «Avísame» por correo)
+var SUPPORT = "alexanderpineda07@gmail.com";
+
+var T = {
+es:{n1:"Qué hace",n2:"Cómo se usa",n3:"Precio",n4:"Preguntas",eyebrow:"Para DaVinci Resolve Studio · Mac con Apple Silicon",
+ h1:"Speed ramps, subtítulos y música. En un clic.",lead:"RK SUITE convierte horas de edición en segundos. Hecho por un editor, pensado para que cualquiera lo entienda.",
+ buy:"Comprar · 49.99 USD",buyw:"Ver precio · 49.99 USD",how:"Ver qué hace",t1:"Pago único, sin suscripción",t2:"Licencia para 2 Macs",t3:"Todo se procesa en tu Mac",cap:"Dibujas la curva. Tu clip acelera y frena justo donde quieres.",
+ m_e:"Cuatro módulos",m_h:"Todo lo que necesitas. Nada que te estorbe.",m_p:"Cada módulo hace una cosa y tiene un botón verde. Lo demás está escondido hasta que lo necesites.",
+ c1h:"Speedramp",c1p:"Dibuja una curva de velocidad y aplícala a tu clip. Se ajusta sola a la duración y sigue el ritmo de tu edición.",
+ c2h:"Subtítulos",c2p:"Transcribe tu audio, elige el idioma y escribe los subtítulos en tu timeline, con animación palabra por palabra.",
+ c3h:"Música",c3p:"Marca los beats y compases, mezcla dos canciones con el tempo emparejado (Automix) y despídete con un reverb final.",
+ c4h:"Sonidos",c4p:"Añade efectos de sonido a tus transiciones y cortes, colocados justo donde suenan mejor.",
+ s_e:"Tan simple como parece",s_h:"Tres pasos y estás editando.",s1h:"Instala",s1p:"Abre el instalador y sigue los pasos. Un doble clic y listo.",
+ s2h:"Ábrelo en Resolve",s2p:"En Resolve ve a Workspace › Workflow Integrations › RK SUITE.",s3h:"Pulsa el botón verde",s3p:"Elige un módulo, ajusta si quieres y aplica. Siempre puedes deshacer.",
+ p_e:"Licencia RK SUITE",p_s:"Un solo pago. Sin suscripción.",p1:"Funciona en <b>2 Macs</b> a la vez",p2:"Todas las actualizaciones de la versión <b>1.x</b>",p3:"Prueba de <b>7 días</b> antes de comprar",p4:"Reembolso de <b>14 días</b>, sin preguntas",
+ buy2:"Comprar ahora",buy2w:"Avísame cuando abra",fine:"Pago seguro. Recibes tu llave y el instalador al instante.",finew:"La tienda abre muy pronto. Déjanos tu correo y te avisamos.",
+ r_h:"Antes de comprar",r1h:"Mac con Apple Silicon",r1p:"M1, M2, M3, M4 o M5. macOS 12 o superior.",r2h:"DaVinci Resolve Studio 21",r2p:"Los plugins de Resolve no funcionan en la versión gratuita.",r3h:"Subtítulos y traducción",r3p:"Necesitan macOS 26 o superior. El resto funciona desde macOS 12.",
+ f_h:"Preguntas frecuentes",q1:"¿Funciona con la versión gratuita de DaVinci Resolve?",a1:"No. Los plugins de Workflow Integration solo funcionan en DaVinci Resolve Studio, que es la versión de pago de Blackmagic.",
+ q2:"¿Y en Premiere Pro?",a2:"Hoy RK SUITE es para DaVinci Resolve. La versión de Premiere Pro está en pruebas y llegará más adelante.",
+ q3:"¿Mis videos se suben a algún lado?",a3:"No. Todo se procesa en tu Mac: tus videos, tu audio y tus subtítulos no salen de tu computadora. Solo se comprueba tu licencia por internet.",
+ q4:"¿Qué pasa si cambio de Mac?",a4:"Tu llave sirve en 2 Macs. Desactiva uno desde el plugin y activa el nuevo cuando quieras.",
+ q5:"macOS dice que no puede verificar el instalador",a5:"Es normal la primera vez: el instalador no está firmado con una cuenta de desarrollador de Apple. Ve a Ajustes del Sistema › Privacidad y seguridad, baja hasta el aviso del instalador y pulsa «Abrir de todos modos». Solo se pide una vez.",
+ q6:"¿Cómo recibo ayuda?",a6:"Escríbenos a",a6b:"Respondemos personalmente.",fo:"Hecho en Guatemala por REDKAM",l1:"Términos de uso",l2:"Privacidad",l3:"Reembolsos"},
+en:{n1:"What it does",n2:"How it works",n3:"Price",n4:"FAQ",eyebrow:"For DaVinci Resolve Studio · Apple Silicon Mac",
+ h1:"Speed ramps, subtitles and music. In one click.",lead:"RK SUITE turns hours of editing into seconds. Made by an editor, designed so anyone can understand it.",
+ buy:"Buy · 49.99 USD",buyw:"See price · 49.99 USD",how:"See what it does",t1:"One-time payment, no subscription",t2:"License for 2 Macs",t3:"Everything runs on your Mac",cap:"You draw the curve. Your clip speeds up and slows down exactly where you want.",
+ m_e:"Four modules",m_h:"Everything you need. Nothing in your way.",m_p:"Each module does one thing and has one green button. The rest stays hidden until you need it.",
+ c1h:"Speedramp",c1p:"Draw a speed curve and apply it to your clip. It fits the duration by itself and follows the rhythm of your edit.",
+ c2h:"Subtitles",c2p:"Transcribe your audio, pick the language and write the subtitles on your timeline, with word-by-word animation.",
+ c3h:"Music",c3p:"Mark beats and bars, mix two songs with matched tempo (Automix) and say goodbye with a final reverb.",
+ c4h:"Sounds",c4p:"Add sound effects to your transitions and cuts, placed exactly where they sound best.",
+ s_e:"As simple as it looks",s_h:"Three steps and you are editing.",s1h:"Install",s1p:"Open the installer and follow the steps. One double-click and done.",
+ s2h:"Open it in Resolve",s2p:"In Resolve go to Workspace › Workflow Integrations › RK SUITE.",s3h:"Press the green button",s3p:"Pick a module, tweak if you like and apply. You can always undo.",
+ p_e:"RK SUITE license",p_s:"One payment. No subscription.",p1:"Works on <b>2 Macs</b> at once",p2:"All updates of version <b>1.x</b>",p3:"<b>7-day</b> trial before you buy",p4:"<b>14-day</b> refund, no questions asked",
+ buy2:"Buy now",buy2w:"Notify me when it opens",fine:"Secure payment. You get your key and the installer instantly.",finew:"The store opens very soon. Leave us your email and we will let you know.",
+ r_h:"Before you buy",r1h:"Apple Silicon Mac",r1p:"M1, M2, M3, M4 or M5. macOS 12 or later.",r2h:"DaVinci Resolve Studio 21",r2p:"Resolve plugins do not work on the free version.",r3h:"Subtitles and translation",r3p:"They need macOS 26 or later. Everything else works from macOS 12.",
+ f_h:"Frequently asked questions",q1:"Does it work with the free version of DaVinci Resolve?",a1:"No. Workflow Integration plugins only work in DaVinci Resolve Studio, Blackmagic's paid version.",
+ q2:"What about Premiere Pro?",a2:"Today RK SUITE is for DaVinci Resolve. The Premiere Pro version is in testing and will come later.",
+ q3:"Are my videos uploaded anywhere?",a3:"No. Everything runs on your Mac: your videos, audio and subtitles never leave your computer. Only your license is checked online.",
+ q4:"What if I change Macs?",a4:"Your key works on 2 Macs. Deactivate one from the plugin and activate the new one whenever you like.",
+ q5:"macOS says it cannot verify the installer",a5:"This is normal the first time: the installer is not signed with an Apple developer account. Go to System Settings › Privacy & Security, scroll to the installer notice and click “Open Anyway”. It is only asked once.",
+ q6:"How do I get help?",a6:"Write to us at",a6b:"We answer personally.",fo:"Made in Guatemala by REDKAM",l1:"Terms of use",l2:"Privacy",l3:"Refunds"}
+};
+var lang="es", reduced=false, el=function(i){return document.getElementById(i)};
+try{reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+if(reduced)document.documentElement.classList.add("noanim");
+try{var sv=localStorage.getItem("rk.lang");if(sv==="en"||sv==="es")lang=sv;else if((navigator.language||"").toLowerCase().indexOf("es")!==0)lang="en"}catch(e){}
+
+function words(){ // titular: palabra por palabra, la última frase resaltada
+  var h=el("h1");h.textContent="";var parts=T[lang].h1.split(" "),cut=lang==="es"?parts.length-3:parts.length-4;
+  parts.forEach(function(w,i){var s=document.createElement("span");s.className="w"+(i>=cut?" lime":"");s.style.animationDelay=(reduced?0:i*70+120)+"ms";s.textContent=w;h.appendChild(s);h.appendChild(document.createTextNode(" "))});
+  h.setAttribute("aria-label",T[lang].h1);
+}
+function apply(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i]").forEach(function(n){var k=n.getAttribute("data-i");if(T[lang][k]!==undefined)n.innerHTML=T[lang][k]});
+  el("lang").textContent=lang==="es"?"EN":"ES";
+  words();wireBuy();
+  document.title=lang==="es"?"RK SUITE · Speed ramps, subtítulos y música para DaVinci Resolve":"RK SUITE · Speed ramps, subtitles and music for DaVinci Resolve";
+}
+function wireBuy(){
+  var b=el("buy2"),b1=el("buy1");
+  if(CHECKOUT_URL){b.href=CHECKOUT_URL;b.target="_blank";b.rel="noopener";b1.href=CHECKOUT_URL;b1.target="_blank";b1.rel="noopener"}
+  else{b1.innerHTML=T[lang].buyw;b.innerHTML=T[lang].buy2w;b.href="mailto:"+SUPPORT+"?subject="+encodeURIComponent("RK SUITE · "+T[lang].buy2w);b.removeAttribute("target");el("fine").innerHTML=T[lang].finew}
+}
+el("lang").addEventListener("click",function(){lang=lang==="es"?"en":"es";try{localStorage.setItem("rk.lang",lang)}catch(e){}apply()});
+el("yr").textContent=new Date().getFullYear();
+apply();
+
+// cabecera con cristal al hacer scroll
+var hd=el("hd");function sc(){hd.classList.toggle("s",window.scrollY>12)}sc();window.addEventListener("scroll",sc,{passive:true});
+
+// revelado al entrar en pantalla
+var io=("IntersectionObserver" in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12,rootMargin:"0px 0px -6% 0px"}):null;
+document.querySelectorAll(".rv").forEach(function(n){if(io)io.observe(n);else n.classList.add("in")});
+
+// brillo que sigue al cursor en las tarjetas
+document.querySelectorAll(".card").forEach(function(c){c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect();c.style.setProperty("--mx",(e.clientX-r.left)+"px");c.style.setProperty("--my",(e.clientY-r.top)+"px")})});
+
+// pasos: la línea se llena al hacer scroll
+var steps=el("steps"),st=steps.querySelectorAll(".step");
+function sp(){var r=steps.getBoundingClientRect(),vh=window.innerHeight,p=Math.max(0,Math.min(1,(vh*.78-r.top)/(r.height+vh*.1)));steps.style.setProperty("--p",p.toFixed(3));st.forEach(function(s,i){s.classList.toggle("on",p>(i+.35)/st.length-.05)})}
+window.addEventListener("scroll",sp,{passive:true});sp();
+
+// preguntas frecuentes
+document.querySelectorAll(".q button").forEach(function(b){b.addEventListener("click",function(){var q=b.parentNode,o=q.classList.toggle("open");b.setAttribute("aria-expanded",o)})});
+
+// precio: cuenta hasta 49.99
+(function(){var n=el("n49"),done=false;if(reduced||!io)return;n.textContent="0.00";
+ var o=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!done){done=true;var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/1100),e=1-Math.pow(1-k,3);n.textContent=(49.99*e).toFixed(2);if(k<1)requestAnimationFrame(f)})(t0);o.disconnect()}},{threshold:.5});o.observe(n)})();
+
+// demo: la curva se dibuja y un punto la recorre; la tira de cuadros avanza a la velocidad de la curva
+(function(){
+  var ln=el("ln"),dot=el("dot"),area=el("area"),spd=el("spd"),film=el("film");
+  var L=ln.getTotalLength();ln.style.strokeDasharray=L;ln.style.strokeDashoffset=reduced?0:L;
+  if(reduced){area.style.opacity=1;dot.setAttribute("cx",0)}
+  var start=performance.now(),draw=1600,loop=7000,x=0,visible=true;
+  var vio=("IntersectionObserver" in window)?new IntersectionObserver(function(e){visible=e[0].isIntersecting}):null;if(vio)vio.observe(film);
+  function speedAt(y){var k=(190-y)/(190-28);return 0.3+k*3.7} // 0.3× abajo, 4× arriba
+  var last=start;
+  function frame(t){
+    requestAnimationFrame(frame);if(!visible||document.hidden){last=t;return}
+    var dt=Math.min(64,t-last);last=t;
+    var e=t-start;
+    if(e<draw){var k=1-Math.pow(1-e/draw,3);ln.style.strokeDashoffset=L*(1-k);area.style.opacity=k*.9}
+    else{ln.style.strokeDashoffset=0;area.style.opacity=.9}
+    var ph=((e-draw*.4)%loop)/loop;if(ph<0)ph=0;
+    var p=ln.getPointAtLength(L*Math.min(1,ph*1.08));
+    dot.setAttribute("cx",p.x);dot.setAttribute("cy",p.y);
+    var s=speedAt(p.y);spd.textContent=s.toFixed(1);
+    x+=s*dt*0.09;film.style.backgroundPosition=(-x)%160+"px 0,"+(-x)%160+"px 0";
+  }
+  if(!reduced)requestAnimationFrame(frame);else{spd.textContent="2.0"}
+})();
+})();
+</script>
+</body>
+</html>
